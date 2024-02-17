@@ -2,7 +2,7 @@ import flet as ft, random, time
 from bs4 import BeautifulSoup
 import re
 #from pyrae import dle
-from pydex import dex
+#from pydex import dex
 #from pydexen import dexen
 from definitii import definitie_es as dfn_es
 from definitii import definitie_ro as dfn_ro

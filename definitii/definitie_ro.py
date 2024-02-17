@@ -17,7 +17,7 @@ def definitie_ro(cuv):
     pt2 = r'</span>((\w*\s*,*\(?\)?)*.) '
     pt3 = r'<meta content=\"\w+,? ?-?\w+,? ?\w+?,? ? -?(\w*\s*,? ?-?.*)◊?\" '
     pt4 =r'</strong> ((\w*\s*,*;?)*.)'
-    definitie=''
+    definitie='Nu găsesc ajutor'
     definitie1=''
     definitie2=''
     definitie3=''
