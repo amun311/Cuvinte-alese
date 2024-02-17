@@ -484,6 +484,6 @@ def main(page: ft.Page):
         game(lb,mod,lb_cuv)    
     except: game('ro','cuvant6','ro')'''
   
-    game('es', 'cuvant5', 'es')
-ft.app(target=main, view=ft.AppView. WEB_BROWSER, assets_dir = './assets')
+    game('ro', 'cuvant5', 'ro')
+ft.app(target=main, view=ft.AppView. WEB_BROWSER)
 #ft.app(target=main,view=ft.AppView.WEB_BROWSER) #view=ft.AppView.WEB_BROWSER, 
