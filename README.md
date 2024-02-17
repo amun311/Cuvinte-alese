@@ -1,6 +1,4 @@
-# A cautacodul Flet app
-
-An example of a minimal Flet app.
+# Cuvinte alese
 
 To run the app:
 
