@@ -1,0 +1,27 @@
+ pwa: {
+  manifest: {
+  "lang": "ro",
+  "name": "Cuvantul zilei",
+  "short_name": "Cuvinte",
+  "id":"Cuvinte",
+  "start_url": ".",
+  "display_override": ["fullscreen", "minimal-ui"],
+  "display": "standalone"
+  "orientation": "any",
+  "background_color": "#fff",
+  "dir":"assets",
+  "description": "Gaseste cuvantul zilei.",
+  "icons": [
+    {
+      "src": "icons/loading-animation.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    }
+  ]
+}
+pwa: {
+  manifest: {
+    name: "Cuvantul zilei",
+    short_name: "Cuvinte",
+    },
+},
