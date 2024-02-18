@@ -12,13 +12,13 @@ lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K'
 lista_caractere_es = ['A','B','C','D','E','F','G','H','I','J','K','L','M','Ñ','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 def schimba_limba(cod_limba):
 
-    ro=['Limba','Ajutor','Despre','Alege-ti limba','Romana','Spaniola','Litera la pozitia corecta','Litera este la pozitia incorecta','Toate literele identice din cuvant\n\t\t\t\t\t\t\t\t\t\t\t\t descoperite','Litera nu este in cuvant','Exista',
-        'cuvinte din','litere','Gliseaza pentru a alege marimea cuvantului','Nu, nu, nu!!! ','\t\t\tImi pare rau, nu ai reusit\n','\t\t\t\t\t\t  sa ghicesti cuvantul','\t\t\t\t\t\t\tCuvantul era:\n','\t\t Ai reusit in \n \t','minut','secunde\n\t\t\t\t\t\t si',
-        'minute','incercari','Felicitari','Verifica','Printre cuvinte in','Limba cuvant','Engleza']
+    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt\n\t\t\t\t\t\t\t\t\t\t\t\t descoperite','Litera nu este în cuvânt','Există',
+        'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','\t\t\t Îmi pare rău, nu ai reușit\n','\t\t\t\t\t\t  să ghicești cuvântul','\t\t\t\t\t\t\t Cuvântul era:\n','\t\t Ai reușit în \n \t','minut','secunde\n\t\t\t\t\t\t si',
+        'minute','încercări ','Felicitări','Verifică','Printre cuvinte în','Limbă cuvânt','Engleză 🇬🇧']
 
-    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano','Español','Letra en la posicion correcta','Letra en la posicion incorrecta','Todas las letras iguales de la\n\t\t\t\t\t\t\t\t\t\t\t  palabra encontradas','La letra no esta en la palabra','Hay',
+    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la\n\t\t\t\t\t\t\t\t\t\t\t  palabra encontradas','La letra no esta en la palabra','Hay',
         'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','\t\tLo siento, no has logrado\n','\t\t\t\t\t\t  encontrar la palabra','\t\t\t\t\tLa palabra era:\n','\t\t Lo has conseguido en  \n \t','minuto','segundos\n\t\t\t\t\t\t y',
-        'minutos', 'intentos','Felicidades','Comprueba','Entre palabras en','Idioma palabra','Ingles']
+        'minutos', 'intentos','Felicidades','Comprueba','Entre palabras en','Idioma palabra','Inglés 🇬🇧']
     if cod_limba == 'ro':
         lang=ro
        
@@ -28,14 +28,16 @@ def schimba_limba(cod_limba):
     return lang
 #creamos la clase Code_show que se encarga de imprimir en pantalla los numeros necesarios de elementos para encontrar la palabra
 class Code_show():
-    def __init__(self,lista_caractere,choice,lang):
+    def __init__(self,lista_caractere,choice,lang, hf):
          
          self.choice = choice
          self.lang = lang
          self.code=''
+         self.hf=hf
          self.lista_caractere=lista_caractere
          self.code_value = ft.TextField(value=self.lista_caractere[0],color='orange', border_color= 'blue',focused_border_color = 'red', max_length=1,capitalization='characters', text_align='center', height=80,border_width=5,border_radius=40,col={"xs":12/len(self.choice), "md": 12/len(self.choice), "xl":12/len(self.choice)})
     def code_minus_click(self, code_value):
+        self.hf.heavy_impact()
         if self.code_value.value not in self.lista_caractere:
                 self.code_value.value = self.lista_caractere[0]   
         else:        
@@ -49,7 +51,7 @@ class Code_show():
             
 
     def code_plus_click(self, code_value):
-        
+        self.hf.heavy_impact()
         if self.code_value.value not in self.lista_caractere:
                 self.code_value.value = self.lista_caractere[0]   
         else:   
@@ -273,6 +275,7 @@ def main(page: ft.Page):
                 def close_dlg(*args):
                     dlg_modal.open = False
                     page.drawer.open = False
+                    time.sleep(0.1)                  
                     page.drawer.update()
                     hf.heavy_impact()
                     page.update()
@@ -293,14 +296,16 @@ def main(page: ft.Page):
                 page.window_close()
 
         def show_drawer(e):
+            time.sleep(0.1)
+            hf.heavy_impact()
             page.drawer.open = True
             page.drawer.update()
-        if lb =='ro' and lb_cuv == 'ro':idl='Romana'
-        elif lb =='ro' and lb_cuv == 'es':idl='Spaniola'
-        elif lb =='ro' and lb_cuv == 'en':idl='Engleza'
-        elif lb =='es' and lb_cuv == 'ro':idl='Rumano'            
-        elif lb =='es' and lb_cuv == 'es':idl='Español'
-        elif lb =='es' and lb_cuv == 'en':idl='Ingles'
+        if lb =='ro' and lb_cuv == 'ro':idl='Română 🇷🇴'
+        elif lb =='ro' and lb_cuv == 'es':idl='Spaniolă 🇪🇸'
+        elif lb =='ro' and lb_cuv == 'en':idl='Engleză 🇬🇧'
+        elif lb =='es' and lb_cuv == 'ro':idl='Rumano 🇷🇴'            
+        elif lb =='es' and lb_cuv == 'es':idl='Español 🇪🇸'
+        elif lb =='es' and lb_cuv == 'en':idl='Inglés 🇬🇧'
         page.appbar = ft.CupertinoAppBar(
             leading = ft.IconButton(icon=ft.icons.MENU, icon_color=ft.colors.BLUE, on_click=show_drawer),
             #trailing = ft.IconButton(icon=ft.icons.EXIT_TO_APP, icon_color=ft.colors.RED, on_click=lambda *args : page.window_destroy()),
@@ -453,7 +458,7 @@ def main(page: ft.Page):
     
         # CONTAINERE REZULTATE
         
-        lista=[Code_show(lista_caractere,choice,lang) for i in range(len(choice))]
+        lista=[Code_show(lista_caractere,choice,lang, hf) for i in range(len(choice))]
         lista_container=[ft.Container(col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},) for i in range(len(choice))]
         lista_cont_probe = [ft.Container(col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)}, height=143) for i in range(len(choice))]#243
         for i in range(len(choice)):  
