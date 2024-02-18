@@ -1,3 +1,4 @@
 flet
 BeautifulSoup4
 regex
+urllib3
