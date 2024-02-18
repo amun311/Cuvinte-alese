@@ -1,4 +1,4 @@
 flet
-BeautifulSoup4
+BeautifulSoup
 regex
 urllib3
