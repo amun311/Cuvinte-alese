@@ -1,4 +1,5 @@
 import re
+import requests
 #import urllib.request as urllib
 import urllib.request
 from urllib.parse import urljoin
@@ -7,10 +8,13 @@ def definitie_ro(cuv):
     user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
     headers = { 'User-Agent' : user_agent }
     try:
-      url  =urljoin('https://dex.ro','//dex.ro/{}'.format(cuv))
-      req = urllib.request.Request(url, None, headers)
-      response = urllib.request.urlopen(req)
-      page = response.read()
+      url = f'https://dex.ro/{cuv}'
+      #url  =urljoin('https://dex.ro','//dex.ro/{}'.format(cuv))
+      #req = urllib.request.Request(url, None, headers)
+      #response = urllib.request.urlopen(req)
+      response =requests.get(url)
+      #page = response.read()
+      page = response.content
       soup = BeautifulSoup(page.decode(), 'html.parser')
       '''req = urllib.Request(f'https://dex.ro/{cuv}', None, headers)
       response = urllib.urlopen(req)
