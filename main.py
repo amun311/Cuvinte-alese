@@ -1,8 +1,8 @@
 import flet as ft, random, time
 from bs4 import BeautifulSoup
 import re
-#from pyrae import dle
-#from pydex import dex
+from pyrae import dle
+from pydex import dex
 #from pydexen import dexen
 from definitii import definitie_es as dfn_es
 from definitii import definitie_ro as dfn_ro
@@ -141,6 +141,18 @@ def main(page: ft.Page):
             
         elif lb_cuv == 'ro':
             definitie = dfn_ro.definitie_ro(choice)
+            if definitie == '...':
+                xc='s. |v. |adj. |; | - |interj. |vb. '
+                defn= dex.search_by_word(word =choice)
+                de=re.split("\"",str(defn))
+                try:
+                  defi =  re.split(xc,de[1],1)                
+                  definitie = defi[1]
+                except: 
+                  try: 
+                    defi =  re.split(xc,de[0],1)                
+                    definitie= defi[1]
+                  except: definitie = '...'
         else: definitie =''    
         page.clean()
         page.drawer = ft.NavigationDrawer(

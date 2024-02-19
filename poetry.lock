@@ -274,29 +274,6 @@ typing_extensions = {version = ">=4.0.1", markers = "python_version < \"3.11\""}
 pifpaf = ["pifpaf (>=2.5.0)", "setuptools"]
 
 [[package]]
-name = "dogpile-cache-autoselect"
-version = "1.0"
-description = "Simple script that attempts to automatically select an available cache backend for dogpile.cache"
-optional = false
-python-versions = "*"
-files = [
-    {file = "dogpile_cache_autoselect-1.0.tar.gz", hash = "sha256:8ed896f24b34ed57fccacda9c9573d98abb59dacb97fd580aabfe75a8dd82b17"},
-]
-
-[package.dependencies]
-"dogpile.cache" = "*"
-
-[[package]]
-name = "dogpile-core"
-version = "0.4.1"
-description = "A 'dogpile' lock, typically used as a component of a larger caching solution"
-optional = false
-python-versions = "*"
-files = [
-    {file = "dogpile.core-0.4.1.tar.gz", hash = "sha256:be652fb11a8eaf66f7e5c94d418d2eaa60a2fe81dae500f3743a863cc9dbed76"},
-]
-
-[[package]]
 name = "exceptiongroup"
 version = "1.2.0"
 description = "Backport of PEP 654 (exception groups)"
@@ -618,6 +595,21 @@ files = [
     {file = "pypng-0.20220715.0-py3-none-any.whl", hash = "sha256:4a43e969b8f5aaafb2a415536c1a8ec7e341cd6a3f957fd5b5f32a4cfeed902c"},
     {file = "pypng-0.20220715.0.tar.gz", hash = "sha256:739c433ba96f078315de54c0db975aee537cbc3e1d0ae4ed9aab0ca1e427e2c1"},
 ]
+
+[[package]]
+name = "pyrae"
+version = "0.1.4"
+description = "Perform searches against the RAE dictionary."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pyrae-0.1.4-py3-none-any.whl", hash = "sha256:a012cef2f2e866c101d9297442bb35a2ba7c7074abadbc605018726208bb5ed1"},
+    {file = "pyrae-0.1.4.tar.gz", hash = "sha256:4bb7e443f49848fee2db94fb6c59e0c8b84871547155d2f5ae9e643d367713ce"},
+]
+
+[package.dependencies]
+beautifulsoup4 = "*"
+"dogpile.cache" = "*"
 
 [[package]]
 name = "python-dateutil"
@@ -1020,4 +1012,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "4c46a2797769493cae364da4e2358b226f36e0f2e7d7af01948630ffd5d24ab0"
+content-hash = "b8eca5de8c4d4459d26dddffd431e0b609ab85afc11efbb8b5f59e28af961bd2"
