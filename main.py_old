@@ -299,21 +299,20 @@ def main(page: ft.Page):
             time.sleep(0.1)
             hf.heavy_impact()
             page.drawer.open = True
-            #page.drawer.update()
-            
+            page.drawer.update()
         if lb =='ro' and lb_cuv == 'ro':idl='Română 🇷🇴'
         elif lb =='ro' and lb_cuv == 'es':idl='Spaniolă 🇪🇸'
         elif lb =='ro' and lb_cuv == 'en':idl='Engleză 🇬🇧'
         elif lb =='es' and lb_cuv == 'ro':idl='Rumano 🇷🇴'            
         elif lb =='es' and lb_cuv == 'es':idl='Español 🇪🇸'
         elif lb =='es' and lb_cuv == 'en':idl='Inglés 🇬🇧'
-        #page.appbar = ft.CupertinoAppBar(leading = ft.IconButton(icon=ft.icons.MENU, icon_color=ft.colors.BLUE, on_click=show_drawer),bgcolor=ft.colors.SURFACE_VARIANT,middle=ft.Text(f'{lang[25]} {idl}'))
-        
-        
+        page.appbar = ft.CupertinoAppBar(
+            leading = ft.IconButton(icon=ft.icons.MENU, icon_color=ft.colors.BLUE, on_click=show_drawer),
+            #trailing = ft.IconButton(icon=ft.icons.EXIT_TO_APP, icon_color=ft.colors.RED, on_click=lambda *args : page.window_destroy()),
+            bgcolor=ft.colors.SURFACE_VARIANT,
+            middle=ft.Text(f'{lang[25]} {idl}')
+        )
 
-        page.appbar = ft.AppBar(title=ft.Text(f'{lang[25]} {idl}'),center_title=True,bgcolor=ft.colors.SURFACE_VARIANT)
-
-        
         
         #slide buttton
         def handle_change(e):
@@ -467,7 +466,7 @@ def main(page: ft.Page):
                 lista_cont_probe[i].scroll = 'always'    
         
              
-        #page.show_snack_bar(ft.SnackBar(content=ft.Text(definitie)))
+        
         page.add(      
             ft.ResponsiveRow([ft.Text(definitie)],alignment=ft.MainAxisAlignment.CENTER),     
             ft.ResponsiveRow([i.valor() for i in lista],alignment=ft.MainAxisAlignment.CENTER),
