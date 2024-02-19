@@ -5,10 +5,9 @@ from bs4.element import Tag
 from copy import deepcopy
 from pydex.util import nested_dictionary_set
 from typing import List, Optional, Sequence, Union
-from urllib.parse import urljoin
 
-#DLE_MAIN_URL = 'https://dex.ro'
-DLE_MAIN_URL = urljoin('https://dex.ro','//dex.ro')
+
+DLE_MAIN_URL = 'https://dex.ro'
 
 class FromHTML(ABC):
     """ Represents an entity that can parse HTML text.
