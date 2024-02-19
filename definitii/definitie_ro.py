@@ -1,16 +1,12 @@
 import re
 #import urllib.request as urllib
 import urllib.request
-import urllib.parse
-from urllib.parse import urlparse
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 def definitie_ro(cuv):
     user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
     headers = { 'User-Agent' : user_agent }
     try:
-      url = urllib.parse.quote('//dex.ro/{}'.format(cuv))
-      url= urlparse(url)._replace(scheme='https')
       url  =urljoin('https://dex.ro','//dex.ro/{}'.format(cuv))
       req = urllib.request.Request(url, None, headers)
       response = urllib.request.urlopen(req)
