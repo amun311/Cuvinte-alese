@@ -5,3 +5,4 @@ urllib3
 pyrae
 dogpile.cache
 pyopenssl
+cryptography
