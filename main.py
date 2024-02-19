@@ -133,6 +133,8 @@ def main(page: ft.Page):
         
         if lb_cuv=='es':
             dfn = dfn_es.definitie_es(choice)
+            if dfn=='':
+              definitie= dle.search_by_word(word =choice)
             definitie = dfn
         elif lb_cuv=='en':
             

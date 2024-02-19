@@ -11,7 +11,7 @@ def definitie_ro(cuv):
       soup = BeautifulSoup(page.decode(), 'html.parser')
       #print(soup)
       response.close() 
-    except: soup =''
+    except: soup = ''
     #pt1 = r'</i> \d\) ((\w*\s*,?)*.) '
     pt1 = r'</i>\)? \d\)?.? ?((\w*\s*,?)*.) '
     pt2 = r'</span>((\w*\s*,*\(?\)?)*.) '
@@ -47,3 +47,4 @@ def definitie_ro(cuv):
             definitie = defn
    
     return definitie
+
