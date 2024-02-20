@@ -12,7 +12,7 @@ def definitie_ro(cuv):
       #url  =urljoin('https://dex.ro','//dex.ro/{}'.format(cuv))
       #req = urllib.request.Request(url, None, headers)
       #response = urllib.request.urlopen(req)
-      response =requests.get(url)
+      response =requests.get(url, headers=headers)
       #page = response.read()
       page = response.content
       soup = BeautifulSoup(page.decode(), 'html.parser')
