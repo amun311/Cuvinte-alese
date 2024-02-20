@@ -1,6 +1,18 @@
 <!DOCTYPE html5>
 <html>
-<script src="https://pyodide-cdn2.iodide.io/v0.15.0/full/pyodide.js" crossorigin=""></script>
+<script> 
+  fetch('https://dex.ro', {
+    mode: 'no-cors'
+  })
+  .then(response => {
+    // You won't get access to the actual response data due to CORS restrictions,
+    // but you can check the status code:
+    console.log(response.status);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+</script>
 <head>
   <base href="/">
   <meta charset="UTF-8">
@@ -37,7 +49,7 @@
       var serviceWorkerVersion = null;
     </script>
     <!-- This script adds the flutter initialization JS code -->
-    <script src="flutter.js" defer></script>
+    <script src="flutter.js"></script>
   </head>
 
   <body>
