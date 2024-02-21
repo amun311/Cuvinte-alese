@@ -25,13 +25,13 @@ def search_by_url(url: str) -> Optional[core.SearchResult]:
                              f"'{core.DLE_MAIN_URL}' URL.")
         return None
     logger.current.info(f"Performing request to: '{url}'...")
-    #try:
-    with urlopen(Request(url=url)) as response:
-        status_code = response.status if version_info >= (3, 9, 0) else response.code
-        logger.current.debug(f'Received response with OK status code {status_code}.')
-        result = core.SearchResult(html=response.read())
-        return result
-    '''except HTTPError as e:
+    try:
+        with urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0'}, data=None, origin_req_host=None, unverifiable=False, method=None)) as response:
+            status_code = response.status if version_info >= (3, 9, 0) else response.code
+            logger.current.debug(f'Received response with OK status code {status_code}.')
+            result = core.SearchResult(html=response.read())
+            return result
+    except HTTPError as e:
         logger.current.error(f'The server could not fulfill the request. Error code: {e.code}.')
         return None
     except URLError as e:
@@ -39,7 +39,7 @@ def search_by_url(url: str) -> Optional[core.SearchResult]:
         return None
     except Exception as e:
         logger.current.error(f'Unexpected error. str{e}')
-        return None'''
+        return None
 
 
 def search_by_word(word: str) -> Optional[core.SearchResult]:
