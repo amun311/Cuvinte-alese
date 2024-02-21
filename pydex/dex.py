@@ -4,7 +4,7 @@ from pydex import logger
 from sys import version_info
 from typing import Optional
 from urllib.error import URLError, HTTPError
-from urllib.parse import quote
+from urllib.parse import quote, urlencode,unquote
 from urllib.request import Request, urlopen
 
 cache_region = make_region().configure('dogpile.cache.memory', expiration_time=86400)
@@ -52,8 +52,8 @@ def search_by_word(word: str) -> Optional[core.SearchResult]:
         logger.current.error('No word was specified.')
         return None
     full_url = f'{core.DLE_MAIN_URL}/{quote(word)}'
-    data = urllib.parse.urlencode(full_url)
-    return search_by_url(url=data)
+      
+    return search_by_url(url=full_url)
 
 
 def set_log_level(log_level: str):

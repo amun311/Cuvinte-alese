@@ -7,7 +7,7 @@ from pydex.util import nested_dictionary_set
 from typing import List, Optional, Sequence, Union
 
 
-DLE_MAIN_URL = 'https{}//dex.ro'.format(':')
+DLE_MAIN_URL = f'https://dex.ro'
 
 class FromHTML(ABC):
     """ Represents an entity that can parse HTML text.
