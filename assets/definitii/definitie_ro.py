@@ -5,12 +5,12 @@ import urllib.request as urllib
 #from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 def definitie_ro(cuv):
-    user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
-    headers = { 'User-Agent' : user_agent }
+    '''user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
+    headers = { 'User-Agent' : user_agent }'''
     try:
       url = f'https://m.dex.ro/?word={cuv}'
       #url  =urljoin('https://dex.ro','//dex.ro/{}'.format(cuv))
-      req = urllib.Request(url, None, headers)
+      req = urllib.Request(url, data=None, headers={'User-Agent': 'Mozilla/5.0'}, origin_req_host=None, unverifiable=False, method=None)
       response = urllib.urlopen(req)
       #response =requests.get(url)
       page = response.read()

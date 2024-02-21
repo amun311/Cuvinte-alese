@@ -26,7 +26,7 @@ def search_by_url(url: str) -> Optional[core.SearchResult]:
         return None
     logger.current.info(f"Performing request to: '{url}'...")
     try:
-        with urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0'})) as response:
+        with urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0'}, data=None, origin_req_host=None, unverifiable=False, method=None)) as response:
             status_code = response.status if version_info >= (3, 9, 0) else response.code
             logger.current.debug(f'Received response with OK status code {status_code}.')
             result = core.SearchResult(html=response.read())
