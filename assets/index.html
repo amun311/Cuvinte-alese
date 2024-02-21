@@ -1,17 +1,8 @@
 <!DOCTYPE html5>
 <html>
 <script> 
-  fetch('https://dex.ro', {
-    mode: 'no-cors'
-  })
-  .then(response => {
-    // You won't get access to the actual response data due to CORS restrictions,
-    // but you can check the status code:
-    console.log(response.status);
-  })
-  .catch(error => {
-    console.error(error);
-  });
+  CORS-anywhere URL: const targetUrl = 'http://dex.ro'; const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; fetch(proxyUrl + targetUrl) 
+  
 </script>
 <head>
   <base href="/">
@@ -49,7 +40,7 @@
       var serviceWorkerVersion = null;
     </script>
     <!-- This script adds the flutter initialization JS code -->
-    <script src="flutter.js"></script>
+    <script src="flutter.js" defer></script>
   </head>
 
   <body>
