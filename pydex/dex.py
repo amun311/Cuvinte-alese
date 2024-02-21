@@ -7,7 +7,8 @@ from urllib.error import URLError, HTTPError
 from urllib.parse import quote, urlencode,unquote
 from urllib.request import Request, urlopen
 import urllib.parse
-urllib.parse.quote(':')
+import requests
+requests.packages.urllib3.disable_warnings() 
 cache_region = make_region().configure('dogpile.cache.memory', expiration_time=86400)
 
 
@@ -21,7 +22,7 @@ def search_by_url(url: str) -> Optional[core.SearchResult]:
 
     logger.current.info(f"Performing request to: '{url}'...")
     try:
-        with urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0'}, data=None, origin_req_host=None, unverifiable=False, method=None)) as response:
+        with urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0'}, data=None, origin_req_host=None, unverifiable=True , method=None)) as response:
             status_code = response.status if version_info >= (3, 9, 0) else response.code
             logger.current.debug(f'Received response with OK status code {status_code}.')
             result = core.SearchResult(html=response.read())
