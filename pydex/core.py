@@ -7,6 +7,7 @@ from pydex.util import nested_dictionary_set
 from typing import List, Optional, Sequence, Union
 
 
+
 DLE_MAIN_URL = f'https://dex.ro'
 
 class FromHTML(ABC):

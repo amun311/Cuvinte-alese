@@ -18,13 +18,7 @@ def search_by_url(url: str) -> Optional[core.SearchResult]:
     :param url: A full URl to the DEX.
     :return: A SearchResult instance, or None if an error occurs.
     """
-    if not url:
-        logger.current.error('No URL was specified.')
-        return None
-    if not url.startswith(core.DLE_MAIN_URL):
-        logger.current.error(f"The URL '{url}' seems to be invalid, it does not start with the known "
-                             f"'{core.DLE_MAIN_URL}' URL.")
-        return None
+
     logger.current.info(f"Performing request to: '{url}'...")
     try:
         with urlopen(Request(url=url, headers={'User-Agent': 'Mozilla/5.0'}, data=None, origin_req_host=None, unverifiable=False, method=None)) as response:
