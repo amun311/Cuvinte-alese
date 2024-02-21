@@ -6,7 +6,8 @@ from typing import Optional
 from urllib.error import URLError, HTTPError
 from urllib.parse import quote, urlencode,unquote
 from urllib.request import Request, urlopen
-
+import urllib.parse
+urllib.parse.quote(':')
 cache_region = make_region().configure('dogpile.cache.memory', expiration_time=86400)
 
 
