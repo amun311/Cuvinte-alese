@@ -52,7 +52,8 @@ def search_by_word(word: str) -> Optional[core.SearchResult]:
         logger.current.error('No word was specified.')
         return None
     full_url = f'{core.DLE_MAIN_URL}/{quote(word)}'
-    return search_by_url(url=full_url)
+    data = urllib.parse.urlencode(full_url)
+    return search_by_url(url=data)
 
 
 def set_log_level(log_level: str):
