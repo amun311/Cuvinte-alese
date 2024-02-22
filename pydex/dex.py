@@ -7,8 +7,7 @@ from urllib.error import URLError, HTTPError
 from urllib.parse import quote, urlencode,unquote
 from urllib.request import Request, urlopen
 import urllib.parse
-import requests
-requests.packages.urllib3.disable_warnings() 
+
 cache_region = make_region().configure('dogpile.cache.memory', expiration_time=86400)
 
 

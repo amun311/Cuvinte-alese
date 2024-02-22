@@ -1,7 +1,5 @@
 import re
-#import urllib.request as urllib
 import urllib.request
-
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 def definitie_es(cuv):

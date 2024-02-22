@@ -1,11 +1,7 @@
 import re
-#import requests
 import urllib.request as urllib
-#import urllib.request
-#from urllib.parse import urljoin
 from bs4 import BeautifulSoup
-import requests
-requests.packages.urllib3.disable_warnings()
+
 def definitie_ro(cuv):
     '''user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
     headers = { 'User-Agent' : user_agent }'''
