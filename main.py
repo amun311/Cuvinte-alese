@@ -10,11 +10,11 @@ def schimba_limba(cod_limba):
 
     ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt\n\t\t\t\t\t\t\t\t\t\t\t\t descoperite','Litera nu este în cuvânt','Există',
         'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','\t\t\t Îmi pare rău, nu ai reușit\n','\t\t\t\t\t\t  să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
-        'minute','încercări','Felicitări','Verifică','Printre cuvinte în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou','Opțiuni']
+        'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou','Opțiuni']
 
     es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la\n\t\t\t\t\t\t\t\t\t\t\t  palabra encontradas','La letra no esta en la palabra','Hay',
         'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','\t\tLo siento, no has logrado\n','\t\t\t\t\t\t  encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
-        'minutos', 'intentos','Felicidades','Comprueba','Entre palabras en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra','Opciones']
+        'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra','Opciones']
     if cod_limba == 'ro':
         lang=ro
        
@@ -80,7 +80,7 @@ class Code_show():
 
 
 def main(page: ft.Page):
-    page.title = 'Cuvinte'
+    page.title = 'Palabres'
     #page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.scroll = 'always'    
     page.theme_mode = ft.ThemeMode.DARK

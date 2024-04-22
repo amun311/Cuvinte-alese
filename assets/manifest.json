@@ -1,11 +1,11 @@
 {
-  "name": "Cuvinte alese",
-  "short_name": "Cuvinte",
+  "name": "Palabres",
+  "short_name": "Palabres",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#12a0fe",
-  "description": "Hai sa decoperim cuvinte",
+  "description": "Vamos a descubrir palabras",
   "orientation": "natural",
   "prefer_related_applications": false,
   "icons": [
