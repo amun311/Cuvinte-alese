@@ -1,19 +1,21 @@
-import flet as ft, random, time
-import re
+import flet as ft, random, time, os
 import requests
 
+import pickle
+color='LIGHT'
+ex=0
 count=10
 vieti = 10
 lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K','L','M','N','O','P','Q','R','S','Ș','T','Ț','U','V','W','X','Y','Z']
-lista_caractere_es = ['A','B','C','D','E','F','G','H','I','J','K','L','M','Ñ','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M','Ñ','N','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z']
 def schimba_limba(cod_limba):
 
-    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt\n\t\t\t\t\t\t\t\t\t\t\t\t descoperite','Litera nu este în cuvânt','Există',
-        'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','\t\t\t Îmi pare rău, nu ai reușit\n','\t\t\t\t\t\t  să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
+    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
+        'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','Îmi pare rău, nu ai reușit\n','să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
         'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou','Opțiuni']
 
-    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la\n\t\t\t\t\t\t\t\t\t\t\t  palabra encontradas','La letra no esta en la palabra','Hay',
-        'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','\t\tLo siento, no has logrado\n','\t\t\t\t\t\t  encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
+    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la palabra encontradas','La letra no esta en la palabra','Hay',
+        'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','Lo siento, no has logrado\n','encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
         'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra','Opciones']
     if cod_limba == 'ro':
         lang=ro
@@ -31,11 +33,13 @@ class Code_show():
         self.code=''
         self.hf=hf
         self.lista_caractere=lista_caractere   
-        
-        self.code_value = ft.TextField(value=self.lista_caractere[0],filled =True,color='orange', border_color= 'blue',focused_border_color = 'red', 
-                                       max_length=1,capitalization='characters', text_align='center',keyboard_type = 'TEXT', 
-                                       text_style=ft.TextStyle(weight='BOLD',),
-                                       input_filter=ft.InputFilter(allow=True, regex_string=r"[a-zA-ZñâăîșțÑĂÂÎȘȚ]", replacement_string="A"),
+        def clear(e):
+            self.code_value.value=''
+            self.code_value.update()
+        self.code_value = ft.TextField(value=self.lista_caractere[0],on_focus=clear,filled =True,color='orange', border_color= 'blue',focused_border_color = 'red', 
+                                       max_length=1,capitalization='characters', text_align='center',keyboard_type = ft.KeyboardType.TEXT, 
+                                       text_style=ft.TextStyle(weight=ft.FontWeight.BOLD,),
+                                       input_filter=ft.InputFilter(allow=False, regex_string=r"[0-9]| |,|\*|\\|º|/|\+|<|>|:|;|_|!|@|`|´|¡|'|¿|\?|=|\)|\(|/|&|%$|·|\"|!|ª|#|~|€|¬]|-|{|}|[|]|^|\.]", replacement_string="A"),
                                        height=80,border_width=5,border_radius=40,col={"xs":12/len(self.choice), "md": 12/len(self.choice), "xl":12/len(self.choice)})
     
     def code_minus_click(self, code_value):
@@ -67,23 +71,33 @@ class Code_show():
 
     def valor(self):            
         return ft.Column([
-                    ft.IconButton(icon ='arrow_circle_up',on_click = lambda *args: self.code_minus_click(self.code_value),width=1000,height=60, style=ft.ButtonStyle(color={ft.MaterialState.DEFAULT: ft.colors.RED,ft.MaterialState.HOVERED: ft.colors.GREEN,},bgcolor=ft.colors.WHITE10)),
+                    ft.IconButton(icon_size=50,icon =ft.icons.ARROW_CIRCLE_UP,on_click = lambda *args: self.code_minus_click(self.code_value),width=1000,height=60, style=ft.ButtonStyle(color={ft.MaterialState.DEFAULT: ft.colors.RED,ft.MaterialState.HOVERED: ft.colors.GREEN,})),
                     self.code_value,
-                    ft.IconButton(icon ='arrow_circle_down', on_click = lambda *args: self.code_plus_click(self.code_value),width=1000,height=60,style=ft.ButtonStyle(color={ft.MaterialState.DEFAULT: ft.colors.GREEN,ft.MaterialState.HOVERED: ft.colors.RED,},bgcolor=ft.colors.WHITE10)),
+                    ft.IconButton(icon_size=50,icon =ft.icons.ARROW_CIRCLE_DOWN,on_click = lambda *args: self.code_plus_click(self.code_value),width=1000,height=60,style=ft.ButtonStyle(color={ft.MaterialState.DEFAULT: ft.colors.GREEN,ft.MaterialState.HOVERED: ft.colors.RED,})),
                     ],alignment=ft.MainAxisAlignment.CENTER,col={"xs":12/len(self.choice), "md": 12/len(self.choice), "xl":12/len(self.choice)},)
    
     def code_valor(self):
-    
-        return self.code_value.value
-
-#definimos la funcion para decodificar los archivos con las palabras
+        if self.code_value.value =='':
+            self.code_value.value ='A'
+        return self.code_value.value 
 
 
 def main(page: ft.Page):
     page.title = 'Palabres'
     #page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.scroll = 'always'    
-    page.theme_mode = ft.ThemeMode.DARK
+    page.scroll = ft.ScrollMode.HIDDEN
+    try:             
+        with open('assets/dict.cfg','r') as f:
+            cfg = f.readlines()
+     
+        globals()['color']=cfg[0] 
+        #print(globals()['color'])
+
+        page.theme_mode = ft.ThemeMode.DARK if globals()['color'] == 'DARK' else ft.ThemeMode.LIGHT
+        
+    except:
+        page.theme_mode = ft.ThemeMode.DARK
+        globals()['color'] = 'DARK'
     page.spacing=5
     theme = ft.Theme(
         scrollbar_theme=ft.ScrollbarTheme(
@@ -140,32 +154,51 @@ def main(page: ft.Page):
         start_time = time.time()
         x=mod.split('t')  
         globals()['vieti']=10 +int(x[1])
-        def alege_cuvantul(litere,lb_cuv):
+        '''def alege_cuvantul(litere,lb_cuv):
                   
             with open(f'./cuvinte/{lb_cuv}_cuvinte{litere}.cfg', 'r') as fisier_cuvinte:
-                lista_cuvinte = fisier_cuvinte.readline().split('@')
-            with open(f'./definitii/{lb_cuv}_definitii_cuvinte{litere}.cfg', 'r') as fisier_definitii:
-                lista_definitii = fisier_definitii.readline().split('@')
+                lista_cuvinte = fisier_cuvinte.readline().split(',')
             index_selectat = random.randint(0,len(lista_cuvinte)-1)
-            choice = lista_cuvinte.pop(index_selectat).upper()  
-            definitie=lista_definitii.pop(index_selectat)         
+            choice = lista_cuvinte.pop(index_selectat).upper()           
             print(choice)
-            print(definitie)
+            return choice    '''   
+        def alege_cuvantul(litere,lb_cuv):
+            lista_cuvinte=[]
+            with open(f'./cuv_def/{lb_cuv}_cuv_def{litere}.pkl', 'rb') as fisier:
+                defis=pickle.load(fisier)      
+            '''for cuv in defis.keys():
+                lista_cuvinte.append(cuv)'''
+            lista_cuvinte=list(defis.keys())
+            index_selectat = random.randint(0,len(lista_cuvinte)-1)
+            choice = lista_cuvinte.pop(index_selectat) 
+            defi=defis[choice].split('[',maxsplit=1)  
+            definitie = defi[0]
+            if definitie == 'Vaya,no tengo la definición':
+                index_selectat = random.randint(0,len(lista_cuvinte)-1)
+                choice = lista_cuvinte.pop(index_selectat) 
+                defi=defis[choice].split('[',maxsplit=1)  
+                definitie = defi[0].strip() 
+            choice=choice.upper()
+            nr_cuv=len(defis)      
+            print(choice)
+            print(definitie.strip())
+            print(nr_cuv)
+            return choice,definitie,nr_cuv
+            
+        #choice = alege_cuvantul(x[1],lb_cuv)
+        choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
+        if lb=='es' and lb_cuv=='es':  idl='Español 🇪🇸'
+        elif lb =='es' and lb_cuv=='ro': idl='Rumano 🇷🇴'                 
+        
+        
+        #romana
+        
+        elif lb== 'ro' and lb_cuv=='es': idl='Spaniolă 🇪🇸'  
+        elif lb== 'ro' and lb_cuv=='ro': idl='Română 🇷🇴'
+        else: definitie =''
+        
             
                 
-            return choice,definitie       
-            
-        choice,definitie = alege_cuvantul(x[1],lb_cuv)
-        if lb=='es' and lb_cuv=='es':idl='Español 🇪🇸'        
-        elif lb== 'es' and lb_cuv=='en':idl='Inglés 🇬🇧'
-        elif lb =='es' and lb_cuv=='ro':idl='Rumano 🇷🇴' 
-        #romana
-        elif lb== 'ro' and lb_cuv=='en':idl='Engleză 🇬🇧'
-        elif lb== 'ro' and lb_cuv=='es':idl='Spaniolă 🇪🇸'  
-        elif lb== 'ro' and lb_cuv=='ro':idl='Română 🇷🇴'
-                    
-        
-                        
         page.clean()
                     
         #page.appbar = ft.CupertinoAppBar(leading = ft.IconButton(icon=ft.icons.MENU, icon_color=ft.colors.BLUE, on_click=show_drawer),bgcolor=ft.colors.SURFACE_VARIANT,middle=ft.Text(f'{lang[25]} {idl}'))
@@ -173,20 +206,21 @@ def main(page: ft.Page):
         def menu_item1(*args):            
             def close_dlg(*args):                
                 dlg_modal.open = False
+                time.sleep(0.1)
                 hf.heavy_impact()                           
                 page.update()
             def set_limba(lb):
                 dlg_modal.open = False
-                hf.heavy_impact()
-                page.clean()
                 time.sleep(0.1)
+                hf.heavy_impact()
+                page.clean()                
                 game(lb,mod,lb)
             dlg_modal = ft.AlertDialog(
-            modal=True,
+            modal=False,
             title=ft.Text(lang[3], text_align='center',),
             #content=ft.Text(spans = [ft.TextSpan('Alege limba\n', ft.TextStyle(color=ft.colors.RED, size=18, weight=ft.FontWeight.BOLD,))]),
             actions=[ft.TextButton(lang[4], on_click=lambda e: set_limba('ro')),ft.TextButton(lang[5], on_click=lambda e: set_limba('es')), ],actions_alignment=ft.MainAxisAlignment.CENTER,
-                )
+               on_dismiss=close_dlg)
             hf.heavy_impact()         
             page.dialog = dlg_modal
             dlg_modal.open = True           
@@ -194,18 +228,19 @@ def main(page: ft.Page):
         def menu_item2(*args):
             def close_dlg(*args):                
                 dlg_modal.open = False
+                time.sleep(0.1)
                 hf.heavy_impact()                 
                 page.update()
             def set_limba_cuv(lb_cuv):
                 hf.heavy_impact()                    
                 dlg_modal.open = False
-                page.clean()
                 time.sleep(0.1)
+                page.clean()
                 game(lb,mod,lb_cuv)
             dlg_modal = ft.AlertDialog(
-                modal=True,
+                modal=False,
                 title=ft.Text(lang[26], text_align='center',),
-                actions=[ft.TextButton(lang[4], on_click=lambda e: set_limba_cuv('ro')),ft.TextButton(lang[5], on_click=lambda e: set_limba_cuv('es')),ft.TextButton(lang[27], on_click=lambda e: set_limba_cuv('en')), ],
+                actions=[ft.TextButton(lang[4], on_click=lambda e: set_limba_cuv('ro')),ft.TextButton(lang[5], on_click=lambda e: set_limba_cuv('es')), ],
                 on_dismiss= close_dlg,
                     )
             hf.heavy_impact()        
@@ -215,10 +250,11 @@ def main(page: ft.Page):
         def menu_item3(*args):
             def close_dlg(*args):                
                 dlg_modal.open = False
+                time.sleep(0.1)
                 hf.heavy_impact()
                 page.update()
             dlg_modal = ft.AlertDialog(
-                modal=True,
+                modal=False,
                 title=ft.Text(lang[1], text_align='center',),
                 content=ft.Text(
                     spans=[
@@ -233,6 +269,7 @@ def main(page: ft.Page):
                                           
                     ]),
                     actions=[ft.TextButton('Ok', on_click=close_dlg),], actions_alignment=ft.MainAxisAlignment.CENTER,
+                    on_dismiss=close_dlg
                     )
                         
             page.dialog = dlg_modal
@@ -241,16 +278,16 @@ def main(page: ft.Page):
             page.update()
         def menu_item4(*args):
             def close_dlg(*args):
-                dlg_modal.open = False                
-                time.sleep(0.1)   
+                dlg_modal.open = False  
+                time.sleep(0.1)
                 page.update() 
                 hf.heavy_impact()
                     
             dlg_modal = ft.AlertDialog(
-                modal=True,
+                modal=False,
                 title=ft.Text(lang[2], text_align='center',),
                 on_dismiss= close_dlg,
-                content=ft.Text(f' Made with ❤️ by Alexandru G. Muntenas \n \t\t\t\tfor my son and my wife ', size=14, text_align='center'),
+                content=ft.Text(spans= [ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\nfor my son and my wife\n'), ft.TextSpan('alexandru.muntenas@gmail.com',on_click=lambda _:page.launch_url('mailto:alexandru.muntenas@gmail.com'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400))], size=14,italic = True, text_align='center'),
                 actions=[ft.TextButton('Ok', on_click=close_dlg),],
                 actions_alignment=ft.MainAxisAlignment.END,
                 )
@@ -261,7 +298,7 @@ def main(page: ft.Page):
             page.update()
         
         img = ft.Image(
-        src=f"/icon1.png",
+        src=f"/icon.png",
         width=100,
         height=100,
         fit=ft.ImageFit.CONTAIN,
@@ -276,7 +313,7 @@ def main(page: ft.Page):
                                     ft.PopupMenuButton(icon = ft.icons.MENU_ROUNDED,
                                             items=[
                                                 ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
-                                                #ft.PopupMenuItem(text=lang[26], on_click=menu_item2,icon=ft.icons.ABC_ROUNDED),
+                                                ft.PopupMenuItem(text=lang[26], on_click=menu_item2,icon=ft.icons.ABC_ROUNDED),
                                                 ft.PopupMenuItem(),  # divider  
                                                 ft.PopupMenuItem(text=lang[1], on_click=menu_item3,icon=ft.icons.HELP_ROUNDED),
                                                 ft.PopupMenuItem(text=lang[2], on_click=menu_item4,icon=ft.icons.INFO_OUTLINE_ROUNDED),
@@ -305,9 +342,9 @@ def main(page: ft.Page):
         page.navigation_bar  = ft.Row([ft.CupertinoSlider(divisions=10,max=10,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),],alignment=ft.MainAxisAlignment.END)
     
        
-        page.add(ft.Row([slider_value,ft.Text(' ')],alignment=ft.MainAxisAlignment.END,col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
+        page.add(ft.Row([slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END,col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
         #print(len(choice)).
-        with open('./rock.cfg','w') as cfg:
+        with open('./palabres.cfg','w') as cfg:
             conf = f'{lb},{mod},{lb_cuv}'
             cfg.writelines(conf)
         def verifica(code):
@@ -364,13 +401,13 @@ def main(page: ft.Page):
             if vieti == 0:
                 def close_dlg(*args):  
                     dlg.open = False 
+                    time.sleep(0.1)
                     page.update()
                     hf.heavy_impact()
-                    time.sleep(0.1)
                     globals()['count'] = 0
                     game(lb,mod,lb_cuv)                                                   
-                dlg = ft.AlertDialog(modal =True,title=ft.Text(lang[14], text_align='center',size=30),
-                    content=ft.Text(f'{lang[15]} {lang[16]}.\n{lang[17]} {choice}\n {definitie}', text_align='center'),actions=[ft.TextButton('Ok', on_click=close_dlg)],actions_alignment=ft.MainAxisAlignment.END,
+                dlg = ft.AlertDialog(modal =False,title=ft.Text(lang[14], text_align='center',size=25),
+                    content=ft.Text(spans=(ft.TextSpan(f'{lang[15]} {lang[16]}.\n{lang[17]} '),ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),ft.TextSpan(f'\n {definitie}')), text_align='center'),actions=[ft.TextButton('Ok', on_click=close_dlg)],actions_alignment=ft.MainAxisAlignment.END,
                     on_dismiss= close_dlg)
                 page.dialog=dlg 
                 hf.heavy_impact()
@@ -381,9 +418,9 @@ def main(page: ft.Page):
                 page.update()       
                 
                             
-            animsw=[]
+            '''animsw=[]
             for x in verifica(code.upper()):
-                animsw.append(ft.AnimatedSwitcher(x,))
+                animsw.append(ft.AnimatedSwitcher(x,))'''
             pozitii =[]
             check_vals=[]
             for i in verifica(code.upper()):
@@ -407,6 +444,7 @@ def main(page: ft.Page):
         def open_dlg_modal(*args):
             def close_dlg(*args):
                 dlg_modal.open = False
+                time.sleep(0.1)
                 page.update()
                 hf.heavy_impact()
                 globals()['count'] = 0
@@ -436,14 +474,33 @@ def main(page: ft.Page):
                 lista_cont_probe[i].content = ft.ListView(spacing=1)
                 lista_cont_probe[i].scroll = 'always'    
         
-             
+        def evnt(e):
+            if e.data=='hide' and page.platform == ft.PagePlatform.ANDROID:
+                os._exit(1)
+            
+        page.on_app_lifecycle_state_change = evnt   
+        def dark_light(e):
+            page.theme_mode =ft.ThemeMode.DARK if globals()['color'] == 'LIGHT' else ft.ThemeMode.LIGHT
+            page.floating_action_button = ft.FloatingActionButton(icon=ft.icons.LIGHT_MODE_OUTLINED,mini=True, on_click=dark_light, bgcolor=ft.colors.BLUE) if globals()['color'] == 'LIGHT' else ft.FloatingActionButton(icon=ft.icons.NIGHTLIGHT_OUTLINED,mini=True, on_click=dark_light, bgcolor=ft.colors.BLUE)
+                
+            page.update()
+            
+            globals()['color'] = 'DARK' if globals()['color'] == 'LIGHT' else 'LIGHT'
+        
+            with open('assets/dict.cfg','w') as f:
+                f.writelines(str(globals()['color']))
+        if globals()['color'] =='DARK':
+            page.floating_action_button = ft.FloatingActionButton(icon=ft.icons.LIGHT_MODE_OUTLINED,mini=True, on_click=dark_light, bgcolor=ft.colors.BLUE)  
+        else:
+            page.floating_action_button = ft.FloatingActionButton(icon=ft.icons.NIGHTLIGHT_OUTLINED,mini=True, on_click=dark_light, bgcolor=ft.colors.BLUE)
+               
         #page.show_snack_bar(ft.SnackBar(content=ft.Text(definitie)))
         page.add(      
             ft.ResponsiveRow([ft.Text(definitie,color=ft.colors.BLUE,size = 16)],alignment=ft.MainAxisAlignment.CENTER),     
-            ft.ResponsiveRow([i.valor() for i in lista],alignment=ft.MainAxisAlignment.CENTER),
+            ft.ResponsiveRow([i.valor() for i in lista],alignment=ft.MainAxisAlignment.CENTER,col={"xs":12/len(choice), "md": 12/len(choice), "xl":12/len(choice)}),
             ft.ResponsiveRow([],alignment=ft.MainAxisAlignment.CENTER),
             ft.ResponsiveRow([],alignment=ft.MainAxisAlignment.CENTER),
-            ft.ResponsiveRow([ft.ElevatedButton(lang[24],color='blue', icon='check', icon_color='orange',scale=1.5,on_click=code_check)],alignment=ft.MainAxisAlignment.CENTER,col={"xs": 12/len(choice), "md": 12/len(choice)}), 
+            ft.Row([ft.ElevatedButton(text=lang[24],color='blue', icon='check', icon_color='orange',scale=1.5,on_click=code_check)],alignment=ft.MainAxisAlignment.CENTER,col={"xs": 12/len(choice), "md": 12/len(choice)}), 
             ft.ResponsiveRow([],alignment=ft.MainAxisAlignment.CENTER),
             ft.ResponsiveRow([],alignment=ft.MainAxisAlignment.CENTER),      
             ft.ResponsiveRow([i for i in lista_container],alignment=ft.MainAxisAlignment.CENTER),
@@ -467,10 +524,9 @@ def main(page: ft.Page):
     country = get_location()
     if country == 'España':game('es', 'cuvant5', 'es')
     elif country == 'Romania':game('ro', 'cuvant5', 'ro')
-    else : game('es', 'cuvant5', 'es')
-    
+    else : game('es', 'cuvant5', 'es')    
     '''try:
-        with open('./rock.cfg','r') as cfg:
+        with open('./palabres.cfg','r') as cfg:
             cfg = cfg.readline().split(',')
             print(cfg)
             lb = cfg[0]
@@ -478,18 +534,16 @@ def main(page: ft.Page):
             lb_cuv = cfg[2]
         game(lb,mod,lb_cuv)    
     except: 
-        def close_dlg_es(*args): 
-                time.sleep(1)                
+        def close_dlg_es(*args):                
                 dlg_modal.open = False
                 hf.heavy_impact()                           
                 page.update()
                 game('es', 'cuvant5', 'es')   
-        def close_dlg_ro(*args):           
-                time.sleep(1)     
+        def close_dlg_ro(*args):                
                 dlg_modal.open = False
                 hf.heavy_impact()                           
                 page.update()
-                game('ro', 'cuvant4', 'ro')         
+                game('ro', 'cuvant5', 'ro')         
         msg =ft.Text(f'Limba / Idioma', text_align='center')
         dlg_modal = ft.AlertDialog(modal=True,title=ft.Text(f'Limba / Idioma', text_align='center',),content=msg,
         actions=[ft.TextButton('Română 🇷🇴', on_click=close_dlg_ro),ft.TextButton('Español 🇪🇸', on_click=close_dlg_es),],
@@ -499,5 +553,5 @@ def main(page: ft.Page):
         page.update()'''
   
     #game('ro', 'cuvant5', 'ro')
-#ft.app(target=main,)
-ft.app(target=main,view=ft.AppView.WEB_BROWSER) #view=ft.AppView.WEB_BROWSER, 
+ft.app(target=main,view=ft.AppView.WEB_BROWSER)
+#ft.app(target=main,view=ft.AppView.WEB_BROWSER) #view=ft.AppView.WEB_BROWSER, 
