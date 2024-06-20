@@ -521,10 +521,10 @@ def main(page: ft.Page):
 
 
     
-    country = get_location()
+    'ctry = get_location()country = get_location()country = get_location()
     if country == 'España':game('es', 'cuvant5', 'es')
     elif country == 'Romania':game('ro', 'cuvant5', 'ro')
-    else : game('es', 'cuvant5', 'es')    
+     : game('es', 'cuvant5', 'es')        else : else    else : else
     '''try:
         with open('./palabres.cfg','r') as cfg:
             cfg = cfg.readline().split(',')
