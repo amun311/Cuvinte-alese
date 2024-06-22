@@ -339,7 +339,7 @@ def main(page: ft.Page):
 
         
         (slider_value := ft.Text(f"{lang[11].capitalize()} {x[1]} {lang[12]}",color=ft.colors.ORANGE,size=20,text_align='center'))
-        page.navigation_bar  = ft.Row([ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),],alignment=ft.MainAxisAlignment.END)
+        page.navigation_bar  = ft.Row([ft.Slider(divisions=10,max=10,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),],alignment=ft.MainAxisAlignment.END)
     
        
         page.add(ft.Row([slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END,col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
@@ -524,7 +524,7 @@ def main(page: ft.Page):
     country = get_location()
     if country == 'España':game('es', 'cuvant5', 'es')
     elif country == 'Romania':game('ro', 'cuvant5', 'ro')
-    else : game('es', 'cuvant5', 'es')    
+    else : game('es', 'cuvant5', 'es')       
     '''try:
         with open('./palabres.cfg','r') as cfg:
             cfg = cfg.readline().split(',')
