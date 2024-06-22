@@ -201,6 +201,8 @@ def main(page: ft.Page):
                 
         page.clean()
                     
+        #page.appbar = ft.CupertinoAppBar(leading = ft.IconButton(icon=ft.icons.MENU, icon_color=ft.colors.BLUE, on_click=show_drawer),bgcolor=ft.colors.SURFACE_VARIANT,middle=ft.Text(f'{lang[25]} {idl}'))
+        
         def menu_item1(*args):            
             def close_dlg(*args):                
                 dlg_modal.open = False
@@ -296,27 +298,23 @@ def main(page: ft.Page):
             page.update()
         
         img = ft.Image(
-        src="/icon.png",
+        src=f"/icon.png",
         width=100,
         height=100,
         fit=ft.ImageFit.CONTAIN,
     )
 
-        def set_limba(lb):
-            page.clean()                
-            game(lb,mod,lb)
+        
             
         page.appbar = ft.AppBar(leading=img,
                                 title=ft.Text(f'{lang[25]} {idl}'),center_title=False,bgcolor=ft.colors.SURFACE_VARIANT,toolbar_height=48,
                                 actions=[
                                     ft.IconButton(ft.icons.PLAY_CIRCLE,icon_color = ft.colors.RED,icon_size=36, on_click = lambda *args: game(lb,mod,lb_cuv), tooltip=lang[28]),
-                                    ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro')),
-                                    ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es')),
                                     ft.PopupMenuButton(icon = ft.icons.MENU_ROUNDED,
                                             items=[
-                                                #ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
-                                                #ft.PopupMenuItem(text=lang[26], on_click=menu_item2,icon=ft.icons.ABC_ROUNDED),
-                                                #ft.PopupMenuItem(),  # divider  
+                                                ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
+                                                ft.PopupMenuItem(text=lang[26], on_click=menu_item2,icon=ft.icons.ABC_ROUNDED),
+                                                ft.PopupMenuItem(),  # divider  
                                                 ft.PopupMenuItem(text=lang[1], on_click=menu_item3,icon=ft.icons.HELP_ROUNDED),
                                                 ft.PopupMenuItem(text=lang[2], on_click=menu_item4,icon=ft.icons.INFO_OUTLINE_ROUNDED),
                                                                                                     
@@ -389,9 +387,7 @@ def main(page: ft.Page):
         def increment():
             globals()['count'] += 1 
             globals()['vieti'] -= 1
-            splash = ft.Row([ft.Text(f'{lang[22].capitalize()}: {count}',color=ft.colors.ORANGE,size=20,text_align='center')])
-            page.splash = splash
-            
+            page.splash = ft.Row([ft.Text(f'{lang[22].capitalize()}: {count}',color=ft.colors.ORANGE,size=20,text_align='center')])
         def code_check(*args):
             hf.heavy_impact()
             hf.heavy_impact()
