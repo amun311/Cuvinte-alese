@@ -310,13 +310,13 @@ def main(page: ft.Page):
                                 title=ft.Text(f'{lang[25]} {idl}'),center_title=False,bgcolor=ft.colors.SURFACE_VARIANT,toolbar_height=48,
                                 actions=[
                                     ft.IconButton(ft.icons.PLAY_CIRCLE,icon_color = ft.colors.RED,icon_size=36, on_click = lambda *args: game(lb,mod,lb_cuv), tooltip=lang[28]),
-                                    ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro')),
-                                    ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es')),
+                                    #ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro')),
+                                    #ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es')),
                                     ft.PopupMenuButton(icon = ft.icons.MENU_ROUNDED,
                                             items=[
-                                                #ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
+                                                ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
                                                 #ft.PopupMenuItem(text=lang[26], on_click=menu_item2,icon=ft.icons.ABC_ROUNDED),
-                                                #ft.PopupMenuItem(),  # divider  
+                                                ft.PopupMenuItem(),  # divider  
                                                 ft.PopupMenuItem(text=lang[1], on_click=menu_item3,icon=ft.icons.HELP_ROUNDED),
                                                 ft.PopupMenuItem(text=lang[2], on_click=menu_item4,icon=ft.icons.INFO_OUTLINE_ROUNDED),
                                                                                                     
