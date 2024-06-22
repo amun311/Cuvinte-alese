@@ -341,12 +341,10 @@ def main(page: ft.Page):
 
         
         (slider_value := ft.Text(f"{lang[11].capitalize()} {x[1]} {lang[12]}",color=ft.colors.ORANGE,size=20,text_align='center'))
-        #page.navigation_bar  = ft.Row([ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),],alignment=ft.MainAxisAlignment.END)
+        page.navigation_bar  = ft.Row([ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),],alignment=ft.MainAxisAlignment.END)
     
-        cont_count=ft.Container()   
-        page.add(ft.Column([ft.Row([cont_count,ft.Text(expand=True),ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),]),
-                         ft.Row([slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END)
-                         ],col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
+       
+        page.add(ft.Row([slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END,col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
         #print(len(choice)).
         with open('./palabres.cfg','w') as cfg:
             conf = f'{lb},{mod},{lb_cuv}'
@@ -386,18 +384,13 @@ def main(page: ft.Page):
             
             return res  
         
-          
-          
-        cont_count.content = ft.Text(f'{lang[22].capitalize()}: {vieti}',color=ft.colors.ORANGE,size=20,text_align='center') 
+            
+            
         def increment():
             globals()['count'] += 1 
             globals()['vieti'] -= 1
-            cont_count.content = ft.Text(f'{lang[22].capitalize()}: {vieti}',color=ft.colors.ORANGE,size=20,text_align='center')
-            
-            splash = ft.Row([ft.Text(f'{lang[22].capitalize()}: ',color=ft.colors.ORANGE,size=20,text_align='center'),cont_count.content])
-            
-            
-            
+            splash = ft.Row([ft.Text(f'{lang[22].capitalize()}: {count}',color=ft.colors.ORANGE,size=20,text_align='center')])
+            page.splash = splash
             
         def code_check(*args):
             hf.heavy_impact()
@@ -506,8 +499,7 @@ def main(page: ft.Page):
             page.floating_action_button = ft.FloatingActionButton(icon=ft.icons.NIGHTLIGHT_OUTLINED,mini=True, on_click=dark_light, bgcolor=ft.colors.BLUE)
                
         #page.show_snack_bar(ft.SnackBar(content=ft.Text(definitie)))
-        page.add(   
-              
+        page.add(      
             ft.ResponsiveRow([ft.Text(definitie,color=ft.colors.BLUE,size = 16)],alignment=ft.MainAxisAlignment.CENTER),     
             ft.ResponsiveRow([i.valor() for i in lista],alignment=ft.MainAxisAlignment.CENTER,col={"xs":12/len(choice), "md": 12/len(choice), "xl":12/len(choice)}),
             ft.ResponsiveRow([],alignment=ft.MainAxisAlignment.CENTER),
