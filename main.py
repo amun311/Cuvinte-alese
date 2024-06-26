@@ -519,7 +519,7 @@ def main(page: ft.Page):
             ft.ResponsiveRow([i for i in lista_cont_probe],alignment=ft.MainAxisAlignment.CENTER),           
                     
         )
-    '''def get_ip():
+    def get_ip():
         response = requests.get('https://api64.ipify.org?format=json').json()
         return response["ip"]
 
@@ -529,15 +529,16 @@ def main(page: ft.Page):
         response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
         
         country = response.get("country_name")
-        return country'''
+        return country
 
 
-    
-    '''country = get_location()
-    if country == 'España':game('es', 'cuvant5', 'es')
-    elif country == 'Romania':game('ro', 'cuvant5', 'ro')
-    else :''' 
-    game('es', 'cuvant5', 'es')    
+    try:
+        country = get_location()
+        if country == 'España':game('es', 'cuvant5', 'es')
+        elif country == 'Romania':game('ro', 'cuvant5', 'ro')
+        else : game('es', 'cuvant5', 'es')  
+    except:
+        game('es', 'cuvant5', 'es')
     '''try:
         with open('./palabres.cfg','r') as cfg:
             cfg = cfg.readline().split(',')
