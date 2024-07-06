@@ -329,7 +329,7 @@ def main(page: ft.Page):
             for lt in pop_lst:
                 rand_choice += lt+ ', '
             #print(rand_choice.strip(' ,'))
-            half_choice_cont.content = ft.Text(value = f'{lang[1]}: {rand_choice.strip(' ,')}',color=ft.colors.GREEN,size=20,text_align='center')
+            half_choice_cont.content = ft.Text(value = f'{lang[1]}: {rand_choice.strip(" ,")}',color=ft.colors.GREEN,size=20,text_align='center')
             #page.overlay.append(ft.Row([ft.Text(choice[:len(choice)//2+1])]))
             globals()['vieti'] -= globals()['vieti']//2 #(len(choice)//2+1)*2
             cont_count.content = ft.Text(f'{lang[22].capitalize()}: {vieti}',color=ft.colors.ORANGE,size=20,text_align='center')
