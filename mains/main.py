@@ -1,7 +1,6 @@
 import flet as ft, random, time, os
 import requests
 import pickle
-
 color='LIGHT'
 ex=0
 count=10
@@ -10,13 +9,15 @@ lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K'
 lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M','Ñ','N','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z']
 def schimba_limba(cod_limba):
 
-    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
+    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt \n descoperite','Litera nu este în cuvânt','Există',
         'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','Îmi pare rău, nu ai reușit\n','să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
-        'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou','Opțiuni']
+        'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou în ','Opțiuni',
+        'Definiții obținute de la: www.dex.ro','Obține litere din cuvânt']
 
-    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la palabra encontradas','La letra no esta en la palabra','Hay',
+    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la \n palabra encontradas','La letra no esta en la palabra','Hay',
         'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','Lo siento, no has logrado\n','encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
-        'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra','Opciones']
+        'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra en ','Opciones',
+        'Funete definiciones:\n Diccionario de la lengua española/RAE','Algunas letras de la palabra']
     if cod_limba == 'ro':
         lang=ro
        
@@ -91,7 +92,7 @@ def main(page: ft.Page):
             cfg = f.readlines()
      
         globals()['color']=cfg[0] 
-        #print(globals()['color'])
+        ##print(globals()['color'])
 
         page.theme_mode = ft.ThemeMode.DARK if globals()['color'] == 'DARK' else ft.ThemeMode.LIGHT
         
@@ -144,12 +145,13 @@ def main(page: ft.Page):
     def game(lb,mod,lb_cuv):
         start=time.time()
         globals()['count'] = 0
-        page.splash = ft.Row([ft.Text(f'',color=ft.colors.ORANGE,size=20,text_align='center')])
+        #page.splash = ft.Row([ft.Text(f'',color=ft.colors.ORANGE,size=20,text_align='center')])
         lang=schimba_limba(lb)
         if lb_cuv =='es':
             lista_caractere = lista_caractere_es
         else :
             lista_caractere=lista_caractere_ro
+        
         start_time = None
         start_time = time.time()
         x=mod.split('t')  
@@ -160,7 +162,7 @@ def main(page: ft.Page):
                 lista_cuvinte = fisier_cuvinte.readline().split(',')
             index_selectat = random.randint(0,len(lista_cuvinte)-1)
             choice = lista_cuvinte.pop(index_selectat).upper()           
-            print(choice)
+            #print(choice)
             return choice    '''   
         def alege_cuvantul(litere,lb_cuv):
             lista_cuvinte=[]
@@ -171,23 +173,24 @@ def main(page: ft.Page):
             lista_cuvinte=list(defis.keys())
             index_selectat = random.randint(0,len(lista_cuvinte)-1)
             choice = lista_cuvinte.pop(index_selectat) 
-            defi=defis[choice].split('[',maxsplit=1)  
-            definitie = defi[0]
-            if definitie == 'Vaya,no tengo la definición':
+            defi=defis[choice]#.split('[',maxsplit=1)  
+            definitie = defi#[0]
+            #print('def',definitie)
+            if definitie == 'Vaya,no tengo la definición' or definitie == ' ':
                 index_selectat = random.randint(0,len(lista_cuvinte)-1)
                 choice = lista_cuvinte.pop(index_selectat) 
-                defi=defis[choice].split('[',maxsplit=1)  
-                definitie = defi[0].strip() 
+                defi=defis[choice]#.split('[',maxsplit=1)  
+                definitie = defi#[0].strip() 
             choice=choice.upper()
             nr_cuv=len(defis)      
-            print(choice)
-            print(definitie.strip())
-            print(nr_cuv)
+            #print(choice)
+            #print(definitie.strip())
+            #print(nr_cuv)
             return choice,definitie,nr_cuv
             
         #choice = alege_cuvantul(x[1],lb_cuv)
         choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
-        if lb=='es' and lb_cuv=='es':  idl='Español 🇪🇸'
+        '''if lb=='es' and lb_cuv=='es':  idl='Español 🇪🇸'
         elif lb =='es' and lb_cuv=='ro': idl='Rumano 🇷🇴'                 
         
         
@@ -195,13 +198,13 @@ def main(page: ft.Page):
         
         elif lb== 'ro' and lb_cuv=='es': idl='Spaniolă 🇪🇸'  
         elif lb== 'ro' and lb_cuv=='ro': idl='Română 🇷🇴'
-        else: definitie =''
+        else: definitie ='''''
         
             
                 
         page.clean()
                     
-        def menu_item1(*args):            
+        '''def menu_item1(*args):            
             def close_dlg(*args):                
                 dlg_modal.open = False
                 time.sleep(0.1)
@@ -244,7 +247,7 @@ def main(page: ft.Page):
             hf.heavy_impact()        
             page.dialog = dlg_modal
             dlg_modal.open = True           
-            page.update()
+            page.update()'''
         def menu_item3(*args):
             def close_dlg(*args):                
                 dlg_modal.open = False
@@ -254,7 +257,7 @@ def main(page: ft.Page):
             dlg_modal = ft.AlertDialog(
                 modal=False,
                 title=ft.Text(lang[1], text_align='center',),
-                content=ft.Text(
+                content=ft.Row([ft.Text(
                     spans=[
                         ft.TextSpan(f'oo',ft.TextStyle(bgcolor=ft.colors.GREEN,color=ft.colors.GREEN, weight=ft.FontWeight.BOLD,)),
                         ft.TextSpan(f'\t{lang[6]}\n'),
@@ -264,15 +267,21 @@ def main(page: ft.Page):
                         ft.TextSpan(f'\t{lang[9]}\n'),
                         ft.TextSpan(f'oo',ft.TextStyle(bgcolor=ft.colors.BLUE,color=ft.colors.BLUE, weight=ft.FontWeight.BOLD,)),
                         ft.TextSpan(f'\t{lang[8]}'),
-                                          
-                    ]),
-                    actions=[ft.TextButton('Ok', on_click=close_dlg),], actions_alignment=ft.MainAxisAlignment.CENTER,
+                        ft.TextSpan(f'\n{lang[30]}',ft.TextStyle(color=ft.colors.RED, italic = True,)),   
+                        ]),
+                       
+                        ]),
+                    actions=[ft.Column([
+                                        ft.Row([ft.IconButton(ft.icons.HAIL,disabled=True,disabled_color='white'),ft.Text(lang[31], text_align='center',)],ft.MainAxisAlignment.CENTER),
+                                        ft.Row([ft.OutlinedButton('Ok', on_click=close_dlg)],ft.MainAxisAlignment.CENTER),
+                                        ])], actions_alignment=ft.MainAxisAlignment.CENTER,
                     on_dismiss=close_dlg
                     )
                         
-            page.dialog = dlg_modal
+            help_dialog = dlg_modal
             hf.heavy_impact()
-            dlg_modal.open = True           
+            dlg_modal.open = True  
+            page.overlay.append(help_dialog)         
             page.update()
         def menu_item4(*args):
             def close_dlg(*args):
@@ -286,13 +295,14 @@ def main(page: ft.Page):
                 title=ft.Text(lang[2], text_align='center',),
                 on_dismiss= close_dlg,
                 content=ft.Text(spans= [ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\nfor my son and my wife\n'), ft.TextSpan('alexandru.muntenas@gmail.com',on_click=lambda _:page.launch_url('mailto:alexandru.muntenas@gmail.com'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400))], size=14,italic = True, text_align='center'),
-                actions=[ft.TextButton('Ok', on_click=close_dlg),],
+                actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
                 actions_alignment=ft.MainAxisAlignment.END,
                 )
                 
-            page.dialog = dlg_modal
+            about_dialog = dlg_modal
             hf.heavy_impact()
             dlg_modal.open = True
+            page.overlay.append(about_dialog)
             page.update()
         
         img = ft.Image(
@@ -305,24 +315,41 @@ def main(page: ft.Page):
         def set_limba(lb):
             page.clean()                
             game(lb,mod,lb)
-            
+        cont_count=ft.Container()   
+        half_choice_cont = ft.Container()
+        def half_choice(e):
+            lst=[]
+            for x in choice:
+                lst.append(x)
+            ind=random.randint(0,len(choice)//2)
+            pop_lst=[]
+            for y in range(len(choice)//2+1):
+                pop_lst.append(lst.pop(ind))
+            rand_choice = ''
+            for lt in pop_lst:
+                rand_choice += lt+ ', '
+            #print(rand_choice.strip(' ,'))
+            half_choice_cont.content = ft.Text(value = f'{lang[1]}: {rand_choice.strip(" ,")}',color=ft.colors.GREEN,size=20,text_align='center')
+            #page.overlay.append(ft.Row([ft.Text(choice[:len(choice)//2+1])]))
+            globals()['vieti'] -= globals()['vieti']//2 #(len(choice)//2+1)*2
+            cont_count.content = ft.Text(f'{lang[22].capitalize()}: {vieti}',color=ft.colors.ORANGE,size=20,text_align='center')
+            cont_count.update()
+            half_choice_cont.update()    
         page.appbar = ft.AppBar(leading=img,
-                                title=ft.Text(f'{lang[25]} {idl}'),center_title=False,bgcolor=ft.colors.SURFACE_VARIANT,toolbar_height=48,
-                                actions=[
-                                    ft.IconButton(ft.icons.PLAY_CIRCLE,icon_color = ft.colors.RED,icon_size=36, on_click = lambda *args: game(lb,mod,lb_cuv), tooltip=lang[28]),
-                                    #ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro')),
-                                    #ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es')),
-                                    ft.PopupMenuButton(icon = ft.icons.MENU_ROUNDED,
-                                            items=[
-                                                ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
+                         title=ft.PopupMenuButton(icon = ft.icons.MENU_ROUNDED,
+                                                                       items=[
+                                                #ft.PopupMenuItem(text=lang[0], on_click=menu_item1,icon=ft.icons.LANGUAGE_ROUNDED),                                                
                                                 #ft.PopupMenuItem(text=lang[26], on_click=menu_item2,icon=ft.icons.ABC_ROUNDED),
-                                                ft.PopupMenuItem(),  # divider  
+                                                #ft.PopupMenuItem(),  # divider  
                                                 ft.PopupMenuItem(text=lang[1], on_click=menu_item3,icon=ft.icons.HELP_ROUNDED),
                                                 ft.PopupMenuItem(text=lang[2], on_click=menu_item4,icon=ft.icons.INFO_OUTLINE_ROUNDED),
                                                                                                     
-                                                ],
-                                            tooltip=lang[29]
+                                                ],tooltip=lang[29]
                                                          ),
+                                actions=[
+                                    #ft.IconButton(ft.icons.PLAY_CIRCLE,icon_color = ft.colors.RED,icon_size=36, on_click = lambda *args: game(lb,mod,lb_cuv), tooltip=lang[28]),
+                                    ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es'), tooltip=lang[28]+lang[5]),
+                                    ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro'), tooltip=lang[28]+lang[4])
                                         ],
                                 )                           
         
@@ -333,7 +360,7 @@ def main(page: ft.Page):
             slider_value.value = f'{lang[11].capitalize()} {int(e.control.value)+3} {lang[12]}'
             hf.heavy_impact()
             x = slider_value.value.split(' ')
-            #print(x[2])
+            ##print(x[2])
             nr = x[2]
             mod = f'cuvant{x[2]}'            
             page.update()
@@ -343,14 +370,16 @@ def main(page: ft.Page):
         (slider_value := ft.Text(f"{lang[11].capitalize()} {x[1]} {lang[12]}",color=ft.colors.ORANGE,size=20,text_align='center'))
         #page.navigation_bar  = ft.Row([ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),],alignment=ft.MainAxisAlignment.END)
     
-        cont_count=ft.Container()   
-        page.add(ft.Column([ft.Row([cont_count,ft.Text(expand=True),ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),ft.Row([ft.Text('    ')]),]),
-                         ft.Row([slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END)
-                         ],col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
-        #print(len(choice)).
-        with open('./palabres.cfg','w') as cfg:
+        
+        page.add(ft.Column([ft.Row([cont_count, ft.IconButton(ft.icons.HAIL,on_click = half_choice, tooltip=lang[31],icon_color='green'),ft.Text(expand=True),
+                                    ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),
+                                    ft.Text('')]),
+                                    ft.Row([half_choice_cont,ft.Text(expand=True),slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END)
+                                    ],col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
+        ##print(len(choice)).
+        ''' with open('./palabres.cfg','w') as cfg:
             conf = f'{lb},{mod},{lb_cuv}'
-            cfg.writelines(conf)
+            cfg.writelines(conf)'''
         def verifica(code):
             '''Verificam codul introdus '''
           
@@ -394,7 +423,7 @@ def main(page: ft.Page):
             globals()['vieti'] -= 1
             cont_count.content = ft.Text(f'{lang[22].capitalize()}: {vieti}',color=ft.colors.ORANGE,size=20,text_align='center')
             
-            splash = ft.Row([ft.Text(f'{lang[22].capitalize()}: ',color=ft.colors.ORANGE,size=20,text_align='center'),cont_count.content])
+            #splash = ft.Row([ft.Text(f'{lang[22].capitalize()}: ',color=ft.colors.ORANGE,size=20,text_align='center'),cont_count.content])
             
             
             
@@ -406,7 +435,7 @@ def main(page: ft.Page):
             for i in lista:
                 code+=i.code_valor()
                            
-            #print(code)
+            ##print(code)
          
             increment()
             if vieti == 0:
@@ -519,7 +548,7 @@ def main(page: ft.Page):
             ft.ResponsiveRow([i for i in lista_cont_probe],alignment=ft.MainAxisAlignment.CENTER),           
                     
         )
-    def get_ip():
+    '''def get_ip():
         response = requests.get('https://api64.ipify.org?format=json').json()
         return response["ip"]
 
@@ -532,17 +561,16 @@ def main(page: ft.Page):
         return country
 
 
-    try:
-        country = get_location()
-        if country == 'España':game('es', 'cuvant5', 'es')
-        elif country == 'Romania':game('ro', 'cuvant5', 'ro')
-        else : game('es', 'cuvant5', 'es')  
-    except:
-        game('es', 'cuvant5', 'es')
+    
+    country = get_location()
+    if country == 'España':game('es', 'cuvant5', 'es')
+    elif country == 'Romania':game('ro', 'cuvant5', 'ro')
+    else :''' 
+    game('es', 'cuvant5', 'es')    
     '''try:
         with open('./palabres.cfg','r') as cfg:
             cfg = cfg.readline().split(',')
-            print(cfg)
+            #print(cfg)
             lb = cfg[0]
             mod= cfg[1]
             lb_cuv = cfg[2]
