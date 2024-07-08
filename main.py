@@ -486,14 +486,17 @@ def main(page: ft.Page):
             
 
             if count != 1:           
-                msg =ft.Text(spans=(ft.TextSpan(f'{lang[17]} '),
+                msg =ft.Text(spans=(ft.TextSpan(f'{lang[18]} {count} {lang[22]}.\n{lang[17]} '),
                                            ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),
                                            ft.TextSpan(f'\n⌛ {minute:02.0f}:{secunde:2.0f}')), text_align='center')
                     
-            else: msg =ft.Text(spans=(ft.TextSpan(f'{lang[18]} {count} {lang[22]}.\n{lang[17]} '),
+            else:
+                msg =ft.Text(spans=(ft.TextSpan(f'{lang[17]} '),
                                            ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),
                                            ft.TextSpan(f'\n⌛ {minute:02.0f}:{secunde:2.0f}')), text_align='center')
                 
+                
+                              
             dlg_modal = ft.AlertDialog(modal=True,title=ft.Text(lang[23], text_align='center',),
                                        content=msg,
                 actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
