@@ -9,15 +9,15 @@ lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K'
 lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M','Ñ','N','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z']
 def schimba_limba(cod_limba):
 
-    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt \n descoperite','Litera nu este în cuvânt','Există',
+    ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
         'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','Îmi pare rău, nu ai reușit\n','să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
         'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou în ','Opțiuni',
         'Definiții obținute de la: www.dex.ro','Obține litere din cuvânt']
 
-    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la \n palabra encontradas','La letra no esta en la palabra','Hay',
+    es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la palabra encontradas','La letra no esta en la palabra','Hay',
         'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','Lo siento, no has logrado\n','encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
         'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra en ','Opciones',
-        'Funete definiciones:\n Diccionario de la lengua española/RAE','Algunas letras de la palabra']
+        'Funete definiciones: Diccionario de la lengua española/RAE','Algunas letras de la palabra']
     if cod_limba == 'ro':
         lang=ro
        
@@ -156,20 +156,12 @@ def main(page: ft.Page):
         start_time = time.time()
         x=mod.split('t')  
         globals()['vieti']=10 +int(x[1])
-        '''def alege_cuvantul(litere,lb_cuv):
-                  
-            with open(f'./cuvinte/{lb_cuv}_cuvinte{litere}.cfg', 'r') as fisier_cuvinte:
-                lista_cuvinte = fisier_cuvinte.readline().split(',')
-            index_selectat = random.randint(0,len(lista_cuvinte)-1)
-            choice = lista_cuvinte.pop(index_selectat).upper()           
-            #print(choice)
-            return choice    '''   
+           
         def alege_cuvantul(litere,lb_cuv):
             lista_cuvinte=[]
             with open(f'./cuv_def/{lb_cuv}_cuv_def{litere}.pkl', 'rb') as fisier:
                 defis=pickle.load(fisier)      
-            '''for cuv in defis.keys():
-                lista_cuvinte.append(cuv)'''
+            
             lista_cuvinte=list(defis.keys())
             index_selectat = random.randint(0,len(lista_cuvinte)-1)
             choice = lista_cuvinte.pop(index_selectat) 
@@ -189,19 +181,11 @@ def main(page: ft.Page):
             return choice,definitie,nr_cuv
             
         #choice = alege_cuvantul(x[1],lb_cuv)
-        choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
-        '''if lb=='es' and lb_cuv=='es':  idl='Español 🇪🇸'
-        elif lb =='es' and lb_cuv=='ro': idl='Rumano 🇷🇴'                 
-        
-        
-        #romana
-        
-        elif lb== 'ro' and lb_cuv=='es': idl='Spaniolă 🇪🇸'  
-        elif lb== 'ro' and lb_cuv=='ro': idl='Română 🇷🇴'
-        else: definitie ='''''
-        
-            
-                
+        try:
+            choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
+        except: 
+            choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
+                        
         page.clean()
                     
         '''def menu_item1(*args):            
@@ -257,7 +241,7 @@ def main(page: ft.Page):
             dlg_modal = ft.AlertDialog(
                 modal=False,
                 title=ft.Text(lang[1], text_align='center',),
-                content=ft.Row([ft.Text(
+                content=ft.ResponsiveRow([ft.Text(
                     spans=[
                         ft.TextSpan(f'oo',ft.TextStyle(bgcolor=ft.colors.GREEN,color=ft.colors.GREEN, weight=ft.FontWeight.BOLD,)),
                         ft.TextSpan(f'\t{lang[6]}\n'),
@@ -267,12 +251,13 @@ def main(page: ft.Page):
                         ft.TextSpan(f'\t{lang[9]}\n'),
                         ft.TextSpan(f'oo',ft.TextStyle(bgcolor=ft.colors.BLUE,color=ft.colors.BLUE, weight=ft.FontWeight.BOLD,)),
                         ft.TextSpan(f'\t{lang[8]}'),
-                        ft.TextSpan(f'\n{lang[30]}',ft.TextStyle(color=ft.colors.RED, italic = True,)),   
+                           
                         ]),
-                       
+                        ft.Row([ft.IconButton(ft.icons.HAIL,disabled=True,disabled_color='white'),ft.Text(lang[31], text_align='center',)],ft.MainAxisAlignment.CENTER),
+                        ft.Text(f'{lang[30]}',style=ft.TextStyle(color=ft.colors.RED, italic = True,)),
                         ]),
                     actions=[ft.Column([
-                                        ft.Row([ft.IconButton(ft.icons.HAIL,disabled=True,disabled_color='white'),ft.Text(lang[31], text_align='center',)],ft.MainAxisAlignment.CENTER),
+                                        
                                         ft.Row([ft.OutlinedButton('Ok', on_click=close_dlg)],ft.MainAxisAlignment.CENTER),
                                         ])], actions_alignment=ft.MainAxisAlignment.CENTER,
                     on_dismiss=close_dlg
@@ -458,9 +443,6 @@ def main(page: ft.Page):
                 page.update()       
                 
                             
-            '''animsw=[]
-            for x in verifica(code.upper()):
-                animsw.append(ft.AnimatedSwitcher(x,))'''
             pozitii =[]
             check_vals=[]
             for i in verifica(code.upper()):

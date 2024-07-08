@@ -10,12 +10,12 @@ lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K'
 def schimba_limba(cod_limba):
 
     ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
-        'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','Îmi pare rău, nu ai reușit\n','să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
+        'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','Îmi pare rău, nu ai reușit ','să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
         'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou în ','Opțiuni',
         'Definiții obținute de la: www.dex.ro','Obține litere din cuvânt']
 
     es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la palabra encontradas','La letra no esta en la palabra','Hay',
-        'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','Lo siento, no has logrado\n','encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
+        'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','Lo siento, no has logrado ','encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
         'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra en ','Opciones',
         'Funete definiciones: Diccionario de la lengua española/RAE','Algunas letras de la palabra']
     if cod_limba == 'ro':
@@ -27,19 +27,21 @@ def schimba_limba(cod_limba):
     return lang
 #creamos la clase Code_show que se encarga de imprimir en pantalla los numeros necesarios de elementos para encontrar la palabra    
 class Code_show():
-    def __init__(self,lista_caractere,choice,lang, hf):
+    def __init__(self,lista_caractere,choice,lang, hf,code_check):
                     
         self.choice = choice
         self.lang = lang
         self.code=''
         self.hf=hf
         self.lista_caractere=lista_caractere   
+        self.code_check = code_check
         def clear(e):
             self.code_value.value=''
             self.code_value.update()
         self.code_value = ft.TextField(value=self.lista_caractere[0],on_focus=clear,filled =True,color='orange', border_color= 'blue',focused_border_color = 'red', 
                                        max_length=1,capitalization='characters', text_align='center',keyboard_type = ft.KeyboardType.TEXT, 
                                        text_style=ft.TextStyle(weight=ft.FontWeight.BOLD,),
+                                       on_submit=code_check,
                                        input_filter=ft.InputFilter(allow=False, regex_string=r"[0-9]| |,|\*|\\|º|/|\+|<|>|:|;|_|!|@|`|´|¡|'|¿|\?|=|\)|\(|/|&|%$|·|\"|!|ª|#|~|€|¬]|-|{|}|[|]|^|\.]", replacement_string="A"),
                                        height=80,border_width=5,border_radius=40,col={"xs":12/len(self.choice), "md": 12/len(self.choice), "xl":12/len(self.choice)})
     
@@ -146,11 +148,11 @@ def main(page: ft.Page):
         start=time.time()
         globals()['count'] = 0
         #page.splash = ft.Row([ft.Text(f'',color=ft.colors.ORANGE,size=20,text_align='center')])
-        lang=schimba_limba(lb)
+        lang = schimba_limba(lb)
         if lb_cuv =='es':
             lista_caractere = lista_caractere_es
         else :
-            lista_caractere=lista_caractere_ro
+            lista_caractere = lista_caractere_ro
         
         start_time = None
         start_time = time.time()
@@ -184,7 +186,7 @@ def main(page: ft.Page):
         try:
             choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
         except: 
-            choice,definitie,nr_cuv = alege_cuvantul(x[1],lb_cuv)
+            choice,definitie,nr_cuv = game(lb,mod,lb_cuv)
                         
         page.clean()
                     
@@ -251,16 +253,15 @@ def main(page: ft.Page):
                         ft.TextSpan(f'\t{lang[9]}\n'),
                         ft.TextSpan(f'oo',ft.TextStyle(bgcolor=ft.colors.BLUE,color=ft.colors.BLUE, weight=ft.FontWeight.BOLD,)),
                         ft.TextSpan(f'\t{lang[8]}'),
-                           
-                        ]),
+                              ]),
                         ft.Row([ft.IconButton(ft.icons.HAIL,disabled=True,disabled_color='white'),ft.Text(lang[31], text_align='center',)],ft.MainAxisAlignment.CENTER),
                         ft.Text(f'{lang[30]}',style=ft.TextStyle(color=ft.colors.RED, italic = True,)),
                         ]),
-                    actions=[ft.Column([
-                                        
-                                        ft.Row([ft.OutlinedButton('Ok', on_click=close_dlg)],ft.MainAxisAlignment.CENTER),
-                                        ])], actions_alignment=ft.MainAxisAlignment.CENTER,
-                    on_dismiss=close_dlg
+                    actions=[ft.Column([ft.Row([ft.OutlinedButton('Ok', on_click=close_dlg)],ft.MainAxisAlignment.CENTER), ])], 
+                    actions_alignment=ft.MainAxisAlignment.CENTER,
+                    scrollable=True,
+                    on_dismiss=close_dlg,
+                    shape=ft.ContinuousRectangleBorder(300)
                     )
                         
             help_dialog = dlg_modal
@@ -281,7 +282,9 @@ def main(page: ft.Page):
                 on_dismiss= close_dlg,
                 content=ft.Text(spans= [ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\nfor my son and my wife\n'), ft.TextSpan('alexandru.muntenas@gmail.com',on_click=lambda _:page.launch_url('mailto:alexandru.muntenas@gmail.com'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400))], size=14,italic = True, text_align='center'),
                 actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
-                actions_alignment=ft.MainAxisAlignment.END,
+                actions_alignment=ft.MainAxisAlignment.CENTER,
+                scrollable=True,
+                shape=ft.ContinuousRectangleBorder(300)
                 )
                 
             about_dialog = dlg_modal
@@ -425,21 +428,27 @@ def main(page: ft.Page):
             increment()
             if vieti == 0:
                 def close_dlg(*args):  
-                    dlg.open = False 
+                    no_dlg.open = False 
                     time.sleep(0.1)
                     page.update()
                     hf.heavy_impact()
                     globals()['count'] = 0
                     game(lb,mod,lb_cuv)                                                   
-                dlg = ft.AlertDialog(modal =False,title=ft.Text(lang[14], text_align='center',size=25),
-                    content=ft.Text(spans=(ft.TextSpan(f'{lang[15]} {lang[16]}.\n{lang[17]} '),ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),ft.TextSpan(f'\n {definitie}')), text_align='center'),actions=[ft.TextButton('Ok', on_click=close_dlg)],actions_alignment=ft.MainAxisAlignment.END,
-                    on_dismiss= close_dlg)
-                page.dialog=dlg 
+                no_dlg = ft.AlertDialog(modal =True,title=ft.Text(lang[14], text_align='center',size=25),
+                    content=ft.Text(spans=(ft.TextSpan(f'{lang[15]} {lang[16]}.\n{lang[17]} '),
+                                           ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),
+                                           ft.TextSpan(f'\n {definitie}')), text_align='center'),
+                    actions=[ft.OutlinedButton('Ok', on_click=close_dlg)],
+                    actions_alignment=ft.MainAxisAlignment.CENTER,
+                    on_dismiss= close_dlg,
+                    shape=ft.ContinuousRectangleBorder(300),
+                    scrollable=True)
+                page.overlay.append(no_dlg) 
                 hf.heavy_impact()
                 hf.heavy_impact()
                 hf.heavy_impact()
                 hf.heavy_impact()
-                dlg.open = True
+                no_dlg.open = True
                 page.update()       
                 
                             
@@ -477,19 +486,28 @@ def main(page: ft.Page):
             
 
             if count != 1:           
-                msg =ft.Text(f'{lang[18]} {count} {lang[22]}.\n{lang[17]} {choice}\n ⌛ {minute:02.0f}:{secunde:2.0f}', text_align='center')
-            else: msg =ft.Text(f'{lang[17]} {choice}\n ⌛ {minute:02.0f}:{secunde:2.0f}', text_align='center')
-            dlg_modal = ft.AlertDialog(modal=True,title=ft.Text(lang[23], text_align='center',),content=msg,
-                actions=[ft.TextButton('Ok', on_click=close_dlg),],
-                actions_alignment=ft.MainAxisAlignment.END,
-                on_dismiss=lambda e: game(lb,mod,lb_cuv),)
-            page.dialog = dlg_modal
+                msg =ft.Text(spans=(ft.TextSpan(f'{lang[17]} '),
+                                           ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),
+                                           ft.TextSpan(f'\n⌛ {minute:02.0f}:{secunde:2.0f}')), text_align='center')
+                    
+            else: msg =ft.Text(spans=(ft.TextSpan(f'{lang[18]} {count} {lang[22]}.\n{lang[17]} '),
+                                           ft.TextSpan(choice,style=ft.TextStyle(color=ft.colors.RED)),
+                                           ft.TextSpan(f'\n⌛ {minute:02.0f}:{secunde:2.0f}')), text_align='center')
+                
+            dlg_modal = ft.AlertDialog(modal=True,title=ft.Text(lang[23], text_align='center',),
+                                       content=msg,
+                actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
+                actions_alignment=ft.MainAxisAlignment.CENTER,
+                on_dismiss=lambda e: game(lb,mod,lb_cuv),
+                shape=ft.ContinuousRectangleBorder(300),
+                scrollable=True)
+            page.overlay.append(dlg_modal)
             dlg_modal.open = True
             page.update()
     
         # CONTAINERE REZULTATE
         
-        lista=[Code_show(lista_caractere,choice,lang, hf) for i in range(len(choice))]
+        lista=[Code_show(lista_caractere,choice,lang, hf,code_check) for i in range(len(choice))]
         lista_container=[ft.Container(col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},) for i in range(len(choice))]
         lista_cont_probe = [ft.Container(col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)}) for i in range(len(choice))]#243
         for i in range(len(choice)):  
