@@ -17,7 +17,7 @@ def schimba_limba(cod_limba):
     es=['Idioma','Ayuda','Acerca de','Elige tu idioma','Rumano 🇷🇴','Español 🇪🇸','Letra en la posición correcta','Letra en la posición incorrecta','Todas las letras iguales de la palabra encontradas','La letra no esta en la palabra','Hay',
         'palabras de','letras','Desliza para elegir el tamaño de la palabra','No, no, no!!! ','Lo siento, no has logrado\n','encontrar la palabra','La palabra era:','Lo has conseguido en ','minuto','segundos y',
         'minutos', 'intentos','Felicidades','Comprueba','Palabres en','Idioma palabra','Inglés 🇬🇧','Pulsa para una nueva palabra en ','Opciones',
-        'Fuente definiciones: Diccionario de la lengua española/RAE','Algunas letras de la palabra']
+        'Fuente definiciones: Diccionario de la lengua española / RAE','Algunas letras de la palabra']
     if cod_limba == 'ro':
         lang=ro
        
