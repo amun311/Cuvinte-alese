@@ -79,9 +79,17 @@
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
-  </head>
 
-  <body>
+  <script>
+    function checkLocation() {
+      if (window.location.href.includes("palabres.eu")) {
+         document.getElementById('floating-ch-banner').style.display = 'none';
+      }
+    }
+  </script>
+</head>
+
+<body onload="checkLocation()">
     <!--changing address-->
     <div id="floating-ch-banner">
       <div id="banner-ch-text">Les informamos que a partir de 01/03/2025 nuestra página web solo se encontrará en la siguiente dirección: <a href="http://www.palabres.eu" style="color: white;">www.palabres.eu</a></div>
@@ -89,9 +97,7 @@
       </div>
   
       <script>
-        if (window.location.href === 'www.palabres.eu' || window.location.href === 'https://www.palabres.eu') {
-           document.getElementById('floating-ch-banner').style.display = 'none';
-        }
+        
       function dismissBanner() {
         document.getElementById('floating-ch-banner').style.display = 'none';
         //window.location.href = 'https://palabres.eu';
