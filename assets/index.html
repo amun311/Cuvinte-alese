@@ -1,6 +1,47 @@
 <!DOCTYPE html5>
 <html crossorigin="anonymous" lang="es">
-
+  <style>
+    /* changing domain message */
+    #banner-ch {
+      position: relative;
+    }
+    #floating-ch-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 20%;
+      width: 60%;
+  
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: rgb(255, 0, 0);
+      border-radius: 10px;
+      text-align: center;
+      z-index: 1000;
+    }
+  
+    #banner-ch-text {
+    font-size: 1.5em;
+    animation: flash 6s infinite;
+    }
+  
+    @keyframes flash {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    #dismiss-ch-btn {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #2259ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  
+  
+    /* */
+  </style>
 <head>
   <base href="/">
   <meta charset="UTF-8">
@@ -41,6 +82,22 @@
   </head>
 
   <body>
+    <!--changing address-->
+    <div id="floating-ch-banner">
+      <div id="banner-ch-text">Les informamos que a partir de 01/03/2025 nuestra página web solo se encontrará en la siguiente dirección: <a href="http://www.palabres.eu" style="color: white;">www.palabres.eu</a></div>
+        <button id="dismiss-ch-btn" onclick="dismissBanner()">OK</button>
+      </div>
+  
+      <script>
+        if (window.location.href === 'http://www.palabres.eu' || window.location.href === 'https://www.palabres.eu') {
+           document.getElementById('floating-banner').style.display = 'none';
+        }
+      function dismissBanner() {
+        document.getElementById('floating-ch-banner').style.display = 'none';
+        //window.location.href = 'http://palabres.eu';
+      }
+      </script>
+      <!--changing address-->
     <div id="loading">
       <style>
         body {
