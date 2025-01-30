@@ -282,7 +282,7 @@ def main(page: ft.Page):
                 title=ft.Text(lang[2], text_align='center',),
                 on_dismiss= close_dlg,
                 content=ft.Text(spans= [
-                ft.TextSpan('Hecho con ❤️ por Alexandru G. Muntenas para mi esposa\n'),
+                ft.TextSpan('Hecho con ❤️ por Alexandru G. Muntenas\n'),
                 ft.TextSpan('alexandru.muntenas@gmail.com\n',on_click=lambda _:page.launch_url('mailto:alexandru.muntenas@gmail.com'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400)),
                 ft.TextSpan(f"Flet version: {flet.version.version}")
                 ], size=14,italic = True, text_align='center'),actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
