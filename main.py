@@ -1,5 +1,5 @@
 import flet as ft, random, time, os
-import requests
+#import requests
 import pickle
 import flet.version
 color='LIGHT'
@@ -298,7 +298,7 @@ def main(page: ft.Page):
                 ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\n'),
                 ft.TextSpan('alexandru@muntenas.eu\n',on_click=lambda _:page.launch_url('mailto:alexandru@muntenas.eu'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400)),
                 ft.TextSpan(f"Flet version: {flet.version.version}\n"),
-                ft.TextSpan(f"Game played: {accesari} times"),
+                ft.TextSpan(f"({accesari})"),
                 ], size=14,italic = True, text_align='center'),actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
                 actions_alignment=ft.MainAxisAlignment.CENTER,
                 scrollable=True,
