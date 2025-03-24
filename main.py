@@ -10,13 +10,13 @@ lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K'
 lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M','Ñ','N','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z']
 def accesari():
     try:
-        with open('assets/accesari.cfg','r') as f:
+        with open('accesari.cfg','r') as f:
             accesari = f.readlines()
             accesari = int(accesari[0])
     except:
         accesari = 0
     accesari += 1
-    with open('assets/accesari.cfg','w') as f:
+    with open('accesari.cfg','w') as f:
         f.writelines(str(accesari))
     return accesari
 accesari = accesari()
