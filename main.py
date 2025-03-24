@@ -19,7 +19,7 @@ def accesa():
     with open('accesari.cfg','w') as f:
         f.writelines(str(accesari))
     return accesari
-accesari = accesa()
+#accesari = accesa()
 def schimba_limba(cod_limba):
     lang = []
     ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
@@ -298,7 +298,7 @@ def main(page: ft.Page):
                 ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\n'),
                 ft.TextSpan('alexandru@muntenas.eu\n',on_click=lambda _:page.launch_url('mailto:alexandru@muntenas.eu'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400)),
                 ft.TextSpan(f"Flet version: {flet.version.version}\n"),
-                ft.TextSpan(f"Engine started: {accesari} times"),
+                ft.TextSpan(f"Game played: {accesari} times"),
                 ], size=14,italic = True, text_align='center'),actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
                 actions_alignment=ft.MainAxisAlignment.CENTER,
                 scrollable=True,
