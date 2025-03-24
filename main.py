@@ -172,7 +172,7 @@ def main(page: ft.Page):
         start_time = time.time()
         x=mod.split('t')  
         globals()['vieti']=10 +int(x[1])
-           
+        accesari = accesa()   
         def alege_cuvantul(litere,lb_cuv):
             lista_cuvinte=[]
             with open(f'./cuv_def/{lb_cuv}_cuv_def{litere}.pkl', 'rb') as fisier:
