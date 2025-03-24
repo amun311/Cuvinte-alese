@@ -8,8 +8,20 @@ count=10
 vieti = 10
 lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K','L','M','N','O','P','Q','R','S','Ș','T','Ț','U','V','W','X','Y','Z']
 lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M','Ñ','N','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z']
+def accesari():
+    try:
+        with open('assets/accesari.cfg','r') as f:
+            accesari = f.readlines()
+            accesari = int(accesari[0])
+    except:
+        accesari = 0
+    accesari += 1
+    with open('assets/accesari.cfg','w') as f:
+        f.writelines(str(accesari))
+    return accesari
+accesari = accesari()
 def schimba_limba(cod_limba):
-
+    lang = []
     ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
         'cuvinte din','litere','Glisează pentru a alege mărimea cuvântului','Nu, nu, nu!!! ','Îmi pare rău, nu ai reușit ','să ghicești cuvântul','Cuvântul era:','Ai reușit în ','minut','secunde și',
         'minute','încercări','Felicitări','Verifică','Palabres în','Limbă cuvânt','Engleză 🇬🇧','Atinge pentru un cuvânt nou în ','Opțiuni',
@@ -40,7 +52,7 @@ class Code_show():
             self.code_value.value=''
             self.code_value.update()
         self.code_value = ft.TextField(value=self.lista_caractere[0],on_focus=clear,filled =True,color='orange', border_color= 'blue',focused_border_color = 'red', 
-                                       max_length=1,capitalization='characters', text_align='center',keyboard_type = ft.KeyboardType.TEXT, 
+                                       max_length=1,capitalization=ft.TextCapitalization.CHARACTERS, text_align=ft.TextAlign.CENTER,keyboard_type = ft.KeyboardType.TEXT, 
                                        text_style=ft.TextStyle(weight=ft.FontWeight.BOLD,),
                                        on_submit=code_check,
                                        input_filter=ft.InputFilter(allow=False, regex_string=r"[0-9]| |,|\*|\\|º|/|\+|<|>|:|;|_|!|@|`|´|¡|'|¿|\?|=|\)|\(|/|&|%$|·|\"|!|ª|#|~|€|¬]|-|{|}|[|]|^|\.]", replacement_string="A"),
@@ -48,6 +60,7 @@ class Code_show():
     
     def code_minus_click(self, code_value):
         self.hf.heavy_impact()
+        self.code_value.value = 'A'
         if self.code_value.value not in self.lista_caractere :
                 self.code_value.value = self.lista_caractere[0]   
         else:        
@@ -75,9 +88,9 @@ class Code_show():
 
     def valor(self):            
         return ft.Column([
-                    ft.IconButton(icon_size=50,icon =ft.icons.ARROW_CIRCLE_UP,on_click = lambda *args: self.code_minus_click(self.code_value),width=1000,height=60, style=ft.ButtonStyle(color={ft.MaterialState.DEFAULT: ft.colors.RED,ft.MaterialState.HOVERED: ft.colors.GREEN,})),
+                    ft.IconButton(icon_size=50,icon =ft.icons.ARROW_CIRCLE_UP,on_click = lambda *args: self.code_minus_click(self.code_value),width=1000,height=60, style=ft.ButtonStyle(color={ft.ControlState.DEFAULT: ft.colors.RED,ft.ControlState.HOVERED: ft.colors.GREEN,})),
                     self.code_value,
-                    ft.IconButton(icon_size=50,icon =ft.icons.ARROW_CIRCLE_DOWN,on_click = lambda *args: self.code_plus_click(self.code_value),width=1000,height=60,style=ft.ButtonStyle(color={ft.MaterialState.DEFAULT: ft.colors.GREEN,ft.MaterialState.HOVERED: ft.colors.RED,})),
+                    ft.IconButton(icon_size=50,icon =ft.icons.ARROW_CIRCLE_DOWN,on_click = lambda *args: self.code_plus_click(self.code_value),width=1000,height=60,style=ft.ButtonStyle(color={ft.ControlState.DEFAULT: ft.colors.GREEN,ft.ControlState.HOVERED: ft.colors.RED,})),
                     ],alignment=ft.MainAxisAlignment.CENTER,col={"xs":12/len(self.choice), "md": 12/len(self.choice), "xl":12/len(self.choice)},)
    
     def code_valor(self):
@@ -106,15 +119,15 @@ def main(page: ft.Page):
     theme = ft.Theme(
         scrollbar_theme=ft.ScrollbarTheme(
         track_color={
-            ft.MaterialState.HOVERED: ft.colors.TRANSPARENT,
-            ft.MaterialState.DEFAULT: ft.colors.TRANSPARENT,
+            ft.ControlState.HOVERED: ft.colors.TRANSPARENT,
+            ft.ControlState.DEFAULT: ft.colors.TRANSPARENT,
         },
         track_visibility=True,
         track_border_color=ft.colors.TRANSPARENT,
         thumb_visibility=True,
         thumb_color={
-            ft.MaterialState.HOVERED: ft.colors.RED,
-            ft.MaterialState.DEFAULT: ft.colors.TRANSPARENT,
+            ft.ControlState.HOVERED: ft.colors.RED,
+            ft.ControlState.DEFAULT: ft.colors.TRANSPARENT,
         },
         thickness=10,
         radius=1,
@@ -282,9 +295,10 @@ def main(page: ft.Page):
                 title=ft.Text(lang[2], text_align='center',),
                 on_dismiss= close_dlg,
                 content=ft.Text(spans= [
-                ft.TextSpan('Hecho con ❤️ por Alexandru G. Muntenas\n'),
-                ft.TextSpan('alexandru.muntenas@gmail.com\n',on_click=lambda _:page.launch_url('mailto:alexandru.muntenas@gmail.com'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400)),
-                ft.TextSpan(f"Flet version: {flet.version.version}")
+                ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\n'),
+                ft.TextSpan('alexandru@muntenas.eu\n',on_click=lambda _:page.launch_url('mailto:alexandru@muntenas.eu'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400)),
+                ft.TextSpan(f"Flet version: {flet.version.version}\n"),
+                ft.TextSpan(f"Visits: {accesari} "),
                 ], size=14,italic = True, text_align='center'),actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
                 actions_alignment=ft.MainAxisAlignment.CENTER,
                 scrollable=True,
