@@ -340,8 +340,8 @@ def main(page: ft.Page):
                                                          ),
                                 actions=[
                                     #ft.IconButton(ft.icons.PLAY_CIRCLE,icon_color = ft.colors.RED,icon_size=36, on_click = lambda *args: game(lb,mod,lb_cuv), tooltip=lang[28]),
-                                    ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es'), tooltip=lang[28]+lang[5]),
-                                    ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro'), tooltip=lang[28]+lang[4])
+                                    ft.TextButton(content=ft.Image(src='/es.png'), on_click=lambda e: set_limba('es'), tooltip=str(lang[28])+str(lang[5])),
+                                    ft.TextButton(content=ft.Image(src='/ro.png'), on_click=lambda e: set_limba('ro'), tooltip=str(lang[28])+str(lang[4]))
                                         ],
                                 )                           
         
@@ -364,7 +364,7 @@ def main(page: ft.Page):
     
         
         page.add(ft.Column([ft.Row([cont_count, ft.IconButton(ft.icons.HAIL,on_click = half_choice, tooltip=lang[31],icon_color='green'),ft.Text(expand=True),
-                                    ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=lang[13]),
+                                    ft.Slider(divisions=10,max=11,active_color=ft.colors.RED,thumb_color=ft.colors.GREEN,value = int(x[1])-3 ,scale = 1.1,on_change=handle_change,tooltip=str(lang[13])),
                                     ft.Text('')]),
                                     ft.Row([half_choice_cont,ft.Text(expand=True),slider_value,ft.Text(nr_cuv,color = ft.colors.RED,size=20)],alignment=ft.MainAxisAlignment.END)
                                     ],col={"xs": 12/len(choice), "md": 12/len(choice), "xl":12/len(choice)},),)
