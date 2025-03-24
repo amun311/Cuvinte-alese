@@ -8,7 +8,7 @@ count=10
 vieti = 10
 lista_caractere_ro = ['A','Ă','Â','B','C','D','E','F','G','H','I','Î','J','K','L','M','N','O','P','Q','R','S','Ș','T','Ț','U','V','W','X','Y','Z']
 lista_caractere_es = ['A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M','Ñ','N','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z']
-def accesari():
+def accesa():
     try:
         with open('accesari.cfg','r') as f:
             accesari = f.readlines()
@@ -19,7 +19,7 @@ def accesari():
     with open('accesari.cfg','w') as f:
         f.writelines(str(accesari))
     return accesari
-accesari = accesari()
+accesari = accesa()
 def schimba_limba(cod_limba):
     lang = []
     ro=['Limbă','Ajutor','Despre','Alege limba','Română 🇷🇴','Spaniolă 🇪🇸','Litera este la poziția corectă','Litera este la poziția incorectă','Toate literele identice din cuvânt descoperite','Litera nu este în cuvânt','Există',
@@ -298,7 +298,7 @@ def main(page: ft.Page):
                 ft.TextSpan('Made with ❤️ by Alexandru G. Muntenas\n'),
                 ft.TextSpan('alexandru@muntenas.eu\n',on_click=lambda _:page.launch_url('mailto:alexandru@muntenas.eu'),style=ft.TextStyle(color='red',weight=ft.FontWeight.W_400)),
                 ft.TextSpan(f"Flet version: {flet.version.version}\n"),
-                ft.TextSpan(f"Visits: {accesari} "),
+                ft.TextSpan(f"Engine started: {accesari} times"),
                 ], size=14,italic = True, text_align='center'),actions=[ft.OutlinedButton('Ok', on_click=close_dlg),],
                 actions_alignment=ft.MainAxisAlignment.CENTER,
                 scrollable=True,
